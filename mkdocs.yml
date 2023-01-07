@@ -1,0 +1,53 @@
+site_name: OpenGL - Getting Started
+site_author: deccer
+site_url: https://deccer.github.io/opengl-getting-started
+repo_name: deccer/opengl-getting-started
+repo_url: https://github.com/deccer/opengl-getting-started
+site_description: OpenGL Getting Started
+copyright: Copyright 2023 deccer
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: yellow
+    accent: pink
+  font:
+    code: Roboto Mono
+  language: en
+  features:
+    - tabs
+    - instant
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/deccer/opengl-getting-started
+      name: OpenGL Getting Started on Github
+    - icon: fontawesome/brands/discord
+      link: https://discord.gg/6mgNGk7
+      name: opengl-getting-started on discord
+markdown_extensions:
+  - admonition
+  - footnotes
+  - meta
+  - markdown.extensions.toc:
+      permalink: true
+  - attr_list
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.snippets
+  - pymdownx.tabbed
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.critic:
+      mode: view
+  - pymdownx.betterem:
+      smart_enable: all
+nav:
+  - Home: index.md
+  - Basic Triangle:
+      - Basic Triangle with DSA: 01-basic-triangle/01-basic-triangle-dsa.md
+      - Basic Triangle without DSA: 01-basic-triangle/01-basic-triangle-nondsa.md
+  - About: about.md
