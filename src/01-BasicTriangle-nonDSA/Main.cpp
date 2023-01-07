@@ -1,4 +1,4 @@
-#include "../../build/_deps/debugbreak-src/debugbreak.h"
+#include <debugbreak.h>
 
 #include <cstddef>
 #include <spdlog/spdlog.h>
