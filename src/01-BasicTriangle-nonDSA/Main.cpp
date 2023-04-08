@@ -187,7 +187,7 @@ int main(int, char**)
     glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
-    auto windowHandle = glfwCreateWindow(windowWidth, windowHeight, "Basic Triangle DSA", nullptr, nullptr);
+    auto windowHandle = glfwCreateWindow(windowWidth, windowHeight, "Basic Triangle nonDSA", nullptr, nullptr);
     if (windowHandle == nullptr)
     {
         spdlog::error("GLFW: Unable to create window");
