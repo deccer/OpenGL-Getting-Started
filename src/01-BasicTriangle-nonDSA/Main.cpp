@@ -157,7 +157,7 @@ void Render()
     glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
 }
 
-void DebugCallback(GLenum source, GLenum type, GLuint, GLenum severity, GLsizei, const GLchar* message, const void*)
+void DebugMessageCallback([[maybe_unused]] GLenum source, GLenum type, [[maybe_unused]] GLuint id, [[maybe_unused]] GLenum severity, [[maybe_unused]] GLsizei messageLength, const GLchar* message, const void*)
 {
     if (type == GL_DEBUG_TYPE_ERROR)
     {
@@ -203,7 +203,7 @@ int main(int, char**)
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-    glDebugMessageCallback(DebugCallback, nullptr);
+    glDebugMessageCallback(DebugMessageCallback, nullptr);
 
     glEnable(GL_DEPTH_TEST);
     glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
