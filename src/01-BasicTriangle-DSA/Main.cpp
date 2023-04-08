@@ -38,8 +38,10 @@ std::vector<std::uint32_t> gIndices =
 
 bool CreateAndCompileShader(std::string_view vertexShaderSource, std::string_view fragmentShaderSource)
 {
+    constexpr std::int32_t logLength = 1024;
     int success = false;
-    char log[1024] = {};
+    char logMessage[logLength] = {};
+
     const char* vertexShaderSourcePtr = vertexShaderSource.data();
     const auto vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertexShaderSourcePtr, nullptr);
@@ -47,8 +49,8 @@ bool CreateAndCompileShader(std::string_view vertexShaderSource, std::string_vie
     glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
     if (!success)
     {
-        glGetShaderInfoLog(vertexShader, 1024, nullptr, log);
-        spdlog::error(log);
+        glGetShaderInfoLog(vertexShader, logLength, nullptr, logMessage);
+        spdlog::error(logMessage);
         return false;
     }
 
@@ -59,8 +61,8 @@ bool CreateAndCompileShader(std::string_view vertexShaderSource, std::string_vie
     glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
     if (!success)
     {
-        glGetShaderInfoLog(fragmentShader, 1024, nullptr, log);
-        spdlog::error(log);
+        glGetShaderInfoLog(fragmentShader, logLength, nullptr, logMessage);
+        spdlog::error(logMessage);
         return false;
     }
 
@@ -68,11 +70,12 @@ bool CreateAndCompileShader(std::string_view vertexShaderSource, std::string_vie
     glAttachShader(gProgram, vertexShader);
     glAttachShader(gProgram, fragmentShader);
     glLinkProgram(gProgram);
+
     glGetProgramiv(gProgram, GL_LINK_STATUS, &success);
     if (!success)
     {
-        glGetProgramInfoLog(gProgram, 1024, nullptr, log);
-        spdlog::error(log);
+        glGetProgramInfoLog(gProgram, logLength, nullptr, logMessage);
+        spdlog::error(logMessage);
 
         return false;
     }
