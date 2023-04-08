@@ -174,7 +174,7 @@ int main(int, char**)
         return 1;
     }
 
-    glfwSetErrorCallback([](auto errorCode, auto errorMessage)
+    glfwSetErrorCallback([]([[maybe_unused]] auto errorCode, auto errorMessage)
     {
         spdlog::error("GLFW: Error {0}", errorMessage);
     });

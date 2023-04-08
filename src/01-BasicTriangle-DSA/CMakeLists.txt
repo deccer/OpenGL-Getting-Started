@@ -9,4 +9,6 @@ set(sourceFiles
 )
 add_executable(01-BasicTriangle-DSA ${sourceFiles} ${headerFiles})
 
+target_compile_options(01-BasicTriangle-DSA PUBLIC -Wall -Wextra -Werror)
+
 target_link_libraries(01-BasicTriangle-DSA PRIVATE glad glfw imgui glm cgltf stb_image spdlog debugbreak)
