@@ -24,6 +24,11 @@ We will integrate [Dear Imgui](https://github.com/ocornut/imgui) instead, right 
 You might want to use it in the future anyway, for showing values for debugging purposes
 or want to click a thing to change a thing while the program is running, so, why not integrate it right away, I will also explain how.
 
+We will also be using `debugbreak` a portable thing which can tell the debugger to break. Handy when we want to see the callstack
+to find the offending OpenGL function when it threw an error.
+
+Later we will be loading a model as well. For that we will be using [fastgltf](https://github.com/spnda/fastgltf)
+
 As mentioned, we will be using `CMake` to handle/build our project. I will not explain what `CMake` is or how exactly it works, but
 in the following paragraph i will briefly show what is what here and there. Should be somewhat self explanatory.
 
