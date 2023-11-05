@@ -253,9 +253,10 @@ bool Application::Initialize()
     glfwMakeContextCurrent(_windowHandle);
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 
+    glEnable(GL_FRAMEBUFFER_SRGB);
+
     glClearColor(0.35f, 0.76f, 0.16f, 1.0f);
     glClearDepthf(1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     return true;
 }
@@ -356,7 +357,7 @@ void Application::Update()
 
 void Application::Render()
 {
-
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void Application::OnFramebufferResized()
@@ -418,4 +419,146 @@ void Application::ToggleFullscreen()
         glfwSetWindowSize(_windowHandle, windowWidth, windowHeight);
     }
 }
+```
+
+Few words about what is happening here.
+
+As mentioned before I like to keep `Initialize` and `Load` separate. `Unload` as the name suggests unloads any resources to clean up
+rather then letting the OS take care of that when you ALT+F4 the app.
+
+The methods `Update` and `Render` are the ones we will be handling our demo/example/guide code in to render stuff and to update things as they are changing.
+
+`OnFramebufferResized` is invoked whenever we resize the window. That leads to its framebuffer (the non client recangle area) being resized too and thats
+where we can hook into, to resize framebuffers or other resources which are depending on the framebuffer size.
+
+`OnKeyDown` and `OnKeyUp` are our callbacks when keys were pressed and released. Should be sufficient for this kind of guide as also mentioned before.
+
+We wanted `F11` to toggle windowed-window and fullscreen. Well there you have it.
+
+Basic application is not done yet. Let's also hookup the debug message callback, which will save our butts in the future. Alot of tutorials or blogs keep using
+so called `glCall` or `glCheck` macros which run `glGetError` - even that they mess up quite a bit, because that ancient function also needs to be called correctly.
+
+Anywho.
+
+lets extend `ApplicationAccess` with another method like this
+
+```cpp
+static void GLAPIENTRY DebugMessageCallback(GLenum source,
+                                    GLenum type,
+                                    GLuint id,
+                                    GLenum severity,
+                                    [[maybe_unused]] GLsizei length,
+                                    const GLchar* message,
+                                    [[maybe_unused]] const void* userParam)
+{
+    // Ignore certain verbose info messages (particularly ones on Nvidia).
+    if (id == 131169 || 
+        id == 131185 || // NV: Buffer will use video memory
+        id == 131218 || 
+        id == 131204 || // Texture cannot be used for texture mapping
+        id == 131222 ||
+        id == 131154 || // NV: pixel transfer is synchronized with 3D rendering
+        id == 0         // gl{Push, Pop}DebugGroup
+    )
+    return;
+
+    std::stringstream debugMessageStream;
+    debugMessageStream << message << '\n';
+
+    switch (source)
+    {
+        case GL_DEBUG_SOURCE_API: debugMessageStream << "Source: API"; break;
+        case GL_DEBUG_SOURCE_WINDOW_SYSTEM: debugMessageStream << "Source: Window Manager"; break;
+        case GL_DEBUG_SOURCE_SHADER_COMPILER: debugMessageStream << "Source: Shader Compiler"; break;
+        case GL_DEBUG_SOURCE_THIRD_PARTY: debugMessageStream << "Source: Third Party"; break;
+        case GL_DEBUG_SOURCE_APPLICATION: debugMessageStream << "Source: Application"; break;
+        case GL_DEBUG_SOURCE_OTHER: debugMessageStream << "Source: Other"; break;
+    }
+
+    debugMessageStream << '\n';
+
+    switch (type)
+    {
+        case GL_DEBUG_TYPE_ERROR: debugMessageStream << "Type: Error"; break;
+        case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: debugMessageStream << "Type: Deprecated Behaviour"; break;
+        case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR: debugMessageStream << "Type: Undefined Behaviour"; break;
+        case GL_DEBUG_TYPE_PORTABILITY: debugMessageStream << "Type: Portability"; break;
+        case GL_DEBUG_TYPE_PERFORMANCE: debugMessageStream << "Type: Performance"; break;
+        case GL_DEBUG_TYPE_MARKER: debugMessageStream << "Type: Marker"; break;
+        case GL_DEBUG_TYPE_PUSH_GROUP: debugMessageStream << "Type: Push Group"; break;
+        case GL_DEBUG_TYPE_POP_GROUP: debugMessageStream << "Type: Pop Group"; break;
+        case GL_DEBUG_TYPE_OTHER: debugMessageStream << "Type: Other"; break;
+    }
+
+    debugMessageStream << '\n';
+
+    switch (severity)
+    {
+        case GL_DEBUG_SEVERITY_HIGH: debugMessageStream << "Severity: high"; break;
+        case GL_DEBUG_SEVERITY_MEDIUM: debugMessageStream << "Severity: medium"; break;
+        case GL_DEBUG_SEVERITY_LOW: debugMessageStream << "Severity: low"; break;
+        case GL_DEBUG_SEVERITY_NOTIFICATION: debugMessageStream << "Severity: notification"; break;
+    }
+
+    if (userParam != nullptr)
+    {
+        auto windowHandle = (GLFWwindow*)userParam;
+        auto application = static_cast<Application*>(glfwGetWindowUserPointer(windowHandle));
+        if (application == nullptr)
+        {
+            spdlog::error("App: You forgot to call glfwSetWindowUserPointer in Application::Initialize");
+            return;
+        }
+
+        application->OnOpenGLDebugMessage(type, debugMessageStream.str());
+    }
+}
+```
+
+That also means we have to extend `Application` itself with `OnOpenGLDebugMessage` like so
+
+```cpp
+protected:
+...
+virtual void OnOpenGLDebugMessage(uint32_t messageType, std::string_view debugMessage);
+...
+```
+
+and
+
+```cpp
+void Application::OnOpenGLDebugMessage(uint32_t messageType, std::string_view debugMessage)
+{
+    spdlog::error(debugMessage);
+    if (messageType == GL_DEBUG_TYPE_ERROR)
+    {
+        debug_break();
+    }
+}
+```
+
+The `Initialize` method also needs to be adjusted slightly to hookup the callback and enable the thing.
+
+```cpp
+glDebugMessageCallback(ApplicationAccess::DebugMessageCallback, _windowHandle);
+glEnable(GL_DEBUG_OUTPUT);
+glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+```
+
+So OpenGL has this mechanism which was added as an extension in OpenGL 3.3 or so and is core since 4.3 I believe.
+A much superior error revealing thing than `glGetError` ever was. It helps to actually point at the offending function
+without cluttering your code with those `glCall/glCheck` macros. and provides a bit more information rather than just "INVALID HANDLE" or something like that
+
+In this context we are actually only interested in actual errors, thats when we ask the debugger to stop here via `debug_break`. Then you can take a look
+at the stacktrace and locate the offending function call that way. With that information you can then go into the [glspec](https://registry.khronos.org/OpenGL/specs/gl/glspec46.core.pdf)
+And look for the function to figure our how to call it properly.
+
+Give it a try, just add a `glEnable(0xFFFF);` at the end of `Application::Initialize`.
+You should get some console output which looks like this:
+
+```
+[2023-11-05 23:53:53.768] [error] GL_INVALID_ENUM error generated. <cap> enum is invalid; expected GL_ALPHA_TEST, GL_BLEND, GL_COLOR_MATERIAL, GL_CULL_FACE, GL_DEPTH_TEST, GL_DITHER, GL_FOG, etc. (136 others).
+Source: API
+Type: Error
+Severity: high
 ```

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <string_view>
 
 struct GLFWwindow;
 
@@ -28,6 +29,8 @@ protected:
         int32_t key,
         int32_t modifiers,
         int32_t scancode);
+
+    virtual void OnOpenGLDebugMessage(uint32_t messageType, std::string_view debugMessage);
 
     int32_t framebufferWidth = 0;
     int32_t framebufferHeight = 0;    
