@@ -2,8 +2,8 @@
 
 #include "../Shared/Application.hpp"
 
-class HelloWindowApplication : public Application
+class HelloWindowApplication final : public Application
 {
 protected:
-    void Update();
+    void Update() override;
 };
