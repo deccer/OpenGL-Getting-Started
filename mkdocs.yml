@@ -26,6 +26,9 @@ extra:
     - icon: fontawesome/brands/discord
       link: https://discord.gg/6mgNGk7
       name: opengl-getting-started on discord
+  analytics:
+    provider: google
+    property: G-2FDD1M3R22
 
 extra_css:
   - stylesheets/extra.css      
