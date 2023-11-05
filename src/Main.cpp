@@ -5,6 +5,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/vec3.hpp>
+#include <glm/mat4x4.hpp>
 
 #include <fstream>
 #include <string>
@@ -97,22 +98,24 @@ void CleanupRender()
 
 bool SetupRender()
 {
-    glGenVertexArrays(1, &gVertexArrayPositionColor);
-    glBindVertexArray(gVertexArrayPositionColor);
+    glCreateBuffers(1, &gVertexBuffer);
+    glNamedBufferStorage(gVertexBuffer, sizeof(VertexPositionColor) * gVertices.size(), gVertices.data(), 0);
 
-    glGenBuffers(1, &gVertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, gVertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(VertexPositionColor) * gVertices.size(), gVertices.data(), GL_STATIC_DRAW);
+    glCreateBuffers(1, &gIndexBuffer);
+    glNamedBufferStorage(gIndexBuffer, sizeof(std::uint32_t) * gIndices.size(), gIndices.data(), 0);
 
-    glGenBuffers(1, &gIndexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, gIndexBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(std::uint32_t) * gIndices.size(), gIndices.data(), GL_STATIC_DRAW);
+    glCreateVertexArrays(1, &gVertexArrayPositionColor);
 
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(VertexPositionColor), (void*)offsetof(VertexPositionColor, Position));
+    glEnableVertexArrayAttrib(gVertexArrayPositionColor, 0);
+    glVertexArrayAttribBinding(gVertexArrayPositionColor, 0, 0);
+    glVertexArrayAttribFormat(gVertexArrayPositionColor, 0, 3, GL_FLOAT, GL_FALSE, offsetof(VertexPositionColor, Position));
 
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(VertexPositionColor), (void*)offsetof(VertexPositionColor, Color));
+    glEnableVertexArrayAttrib(gVertexArrayPositionColor, 1);
+    glVertexArrayAttribBinding(gVertexArrayPositionColor, 1, 0);
+    glVertexArrayAttribFormat(gVertexArrayPositionColor, 1, 3, GL_FLOAT, GL_FALSE, offsetof(VertexPositionColor, Color));
+
+    glVertexArrayVertexBuffer(gVertexArrayPositionColor, 0, gVertexBuffer, 0, sizeof(VertexPositionColor));
+    glVertexArrayElementBuffer(gVertexArrayPositionColor, gIndexBuffer);
 
     auto vertexShaderSource = R"glsl(
         #version 460 core
@@ -187,7 +190,7 @@ int main(int, char**)
     glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
-    auto windowHandle = glfwCreateWindow(windowWidth, windowHeight, "Basic Triangle nonDSA", nullptr, nullptr);
+    auto windowHandle = glfwCreateWindow(windowWidth, windowHeight, "Basic Triangle DSA", nullptr, nullptr);
     if (windowHandle == nullptr)
     {
         spdlog::error("GLFW: Unable to create window");

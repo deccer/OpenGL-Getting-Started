@@ -1,1 +1,0 @@
-# Basic Triangle without DSA

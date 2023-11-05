@@ -7,16 +7,17 @@ site_description: OpenGL Getting Started
 copyright: Copyright 2023 deccer
 theme:
   name: material
+  font:
+    text: Roboto Flex
+    code: Roboto Mono
   palette:
     scheme: slate
-    primary: yellow
-    accent: pink
-  font:
-    code: Roboto Mono
+    primary: pink
+    accent: yellow
   language: en
   features:
-    - tabs
-    - instant
+    - navigation.tabs
+    - navigation.instant.progress
 extra:
   social:
     - icon: fontawesome/brands/github
@@ -25,10 +26,13 @@ extra:
     - icon: fontawesome/brands/discord
       link: https://discord.gg/6mgNGk7
       name: opengl-getting-started on discord
+
+extra_css:
+  - stylesheets/extra.css      
+
 markdown_extensions:
   - admonition
   - footnotes
-  - meta
   - markdown.extensions.toc:
       permalink: true
   - attr_list
@@ -37,7 +41,9 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.superfences
   - pymdownx.snippets
-  - pymdownx.tabbed
+  - pymdownx.tabbed:
+      alternate_style: true
+      combine_header_slug: true
   - pymdownx.caret
   - pymdownx.mark
   - pymdownx.tilde
@@ -47,7 +53,9 @@ markdown_extensions:
       smart_enable: all
 nav:
   - Home: index.md
+  - Setup:
+      - Setup: 00-setup/00-setup.md
+      - Basic Application: 00-setup/01-basic-application.md
   - Basic Triangle:
-      - Basic Triangle with DSA: 01-basic-triangle/01-basic-triangle-dsa.md
-      - Basic Triangle without DSA: 01-basic-triangle/01-basic-triangle-nondsa.md
+      - Basic Triangle: 10-basic-triangle/10-basic-triangle.md
   - About: about.md
