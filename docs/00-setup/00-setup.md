@@ -30,20 +30,28 @@ in the following paragraph i will comment what is what a bit here and there. Sho
 Before we start, let me try to explain the intended project structure.
 
 
+```cpp
 ProjectRoot
-lib/
-lib/CMakeLists.txt - here we describe all third party dependencies
-                     like glfw, glad, spdlog, imgui, ...
-src/
-src/Shared/
-src/Shared/CMakeLists.txt - project file for the shared library
-src/Shared/Application.cpp - guess what's in here
-src/Shared/Application.hpp - or here
-src/01-HelloWindow/
-src/01-HelloWindow/HelloWindowApplication.cpp - our application bits for this project
-src/01-HelloWindow/HelloWindowApplication.hpp
-src/01-HelloWindow/CMakeLists.txt - project file for HelloWindow
-src/02-HelloTriangle/
-src/02-HelloTriangle/CMakeLists.txt - project file for HelloTriangle
-...and so forth...
-CMakeLists.txt - Thats our project root file - solution file if you will
+├── lib
+│   └── CMakeLists.txt                    # here we describe all third party dependencies
+│                                         # like glfw, glad, spdlog, imgui, ...
+├── src
+│   ├── Shared
+│   │   ├── Application.cpp               # guess what is in here
+│   │   ├── Application.hpp               # or here
+│   │   └── CMakeLists.txt                # project file for the shared library
+│   │   01-HelloWindow
+│   │   ├── HelloWindowApplication.cpp    # our application bits for this project
+│   │   ├── HelloWindowApplication.hpp
+│   │   └── CMakeLists.txt                # project file for HelloWindow
+│   │   02-HelloTriangle
+│   │   ├── HelloTriangleApplication.cpp
+... ... ...
+│   │   └── CMakeLists.txt                # project file for HelloTriangle
+│   ...and so forth...
+└── CMakeLists.txt                        # Thats our solution file
+```
+
+Shared will contain all the things which we might be sharing across the projects. This repo will contain the final thing.
+There won't be dedicated git branches per chapter or something like that. However I will explain everything in this guide
+and we will start from a project skeleton and progressively add things to it and modify things as we go.
