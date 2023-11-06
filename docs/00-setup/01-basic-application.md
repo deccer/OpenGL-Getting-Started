@@ -3,7 +3,7 @@
 Let's prepare a base application to handle all the glue around the renderer.
 
 An application is just a shell of functions which do things to run the things we want.
-In my world I like to have an `Application` base class which looks like this
+I would like to have an `Application` base class which looks like this
 
 ### Application.hpp
 ```cpp
@@ -40,12 +40,14 @@ private:
 };
 ```
 
+which all the other demos/examples/tutorials derive from.
+
 Only one public method, which will be the entry point for the `main` function.
 
-Since we will be using `GLFW` and we only need to support one window, `Application` will hold the native glfw handle
-to the window.
+Since we will be using `GLFW` and we only need to support one window, `Application` will
+hold the native glfw handle to the window.
 
-And the rest of the skellington.
+And the rest of the application skellington.
 
 ### Application.cpp
 ```cpp
@@ -260,6 +262,15 @@ bool Application::Initialize()
 
     return true;
 }
+```
+
+Don't forget to include all the things required here.
+```cpp
+#include "Application.hpp"
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <spdlog/spdlog.h>
 ```
 
 The important bits here are, initialize `GLFW`, grab the screen resolution of the current primary monitor so that we can center the window
@@ -552,6 +563,12 @@ without cluttering your code with those `glCall/glCheck` macros. and provides a 
 In this context we are actually only interested in actual errors, thats when we ask the debugger to stop here via `debug_break`. Then you can take a look
 at the stacktrace and locate the offending function call that way. With that information you can then go into the [glspec](https://registry.khronos.org/OpenGL/specs/gl/glspec46.core.pdf)
 And look for the function to figure our how to call it properly.
+
+Dont forget to include its header as well
+
+```cpp
+#include <debugbreak.h>
+```
 
 Give it a try, just add a `glEnable(0xFFFF);` at the end of `Application::Initialize`.
 You should get some console output which looks like this:

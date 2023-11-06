@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <string_view>
+#include <expected>
 
 struct GLFWwindow;
 
@@ -13,6 +14,8 @@ public:
     void Run();
 
 protected:
+    static std::expected<std::string, std::string> ReadTextFromFile(std::string_view filePath);
+
     virtual bool Initialize();
     virtual bool Load();
     virtual void Unload();
