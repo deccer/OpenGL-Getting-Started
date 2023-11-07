@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
 {
     HelloTriangleApplication application;
     application.Run();
-    return 0; // comment
+    return 0;
 }
 ```
 
@@ -29,23 +29,33 @@ For that let's extend `Application` with a method which allows us to read text f
 ### Application.hpp
 ```cpp
 #include <string_view>
-
+#include <expected>
 ...
 
 protected:
-    static std::string ReadTextFromFile(std::string_view filePath);
+    static std::expected<std::string, std::string> ReadTextFromFile(std::string_view filePath);
 ```
 
 ### Application.cpp
 ```cpp
 #include <fstream>
-
+#include <format>
 ...
 
-std::string Application::ReadTextFromFile(std::string_view filePath);
+std::expected<std::string, std::string> Application::ReadTextFromFile(std::string_view filePath)
 {
     std::ifstream file(filePath.data(), std::ios::ate);
-    std::string result(file.tellg(), '\0');
+    if (file.bad())
+    {
+        return std::unexpected(std::format("Io: Unable to read from file {}", filePath));
+    }
+    auto fileSize = file.tellg();
+    if (fileSize == 0)
+    {
+        return std::unexpected(std::format("Io: File {} is empty", filePath));
+    }
+
+    std::string result(fileSize, '\0');
     file.seekg(0);
     file.read((char*)result.data(), result.size());
     return result;
