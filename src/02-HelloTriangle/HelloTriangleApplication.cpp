@@ -33,9 +33,9 @@ bool HelloTriangleApplication::Load()
     glVertexArrayAttribFormat(_inputLayout, 1, 2, GL_FLOAT, GL_FALSE, offsetof(VertexPositionUv, Uv));
     glVertexArrayAttribBinding(_inputLayout, 1, 0);
 
-    _vertices.push_back({.Position = glm::vec3(-1.0f, 1.0f, 0.0f), .Uv = glm::vec2(0.0f, 1.0f)});
-    _vertices.push_back({.Position = glm::vec3(+1.0f, 1.0f, 0.0f), .Uv = glm::vec2(1.0f, 1.0f)});
-    _vertices.push_back({.Position = glm::vec3( 0.0f, -1.0f, 0.0f), .Uv = glm::vec2(0.5f, 0.0f)});
+    _vertices.push_back({.Position = glm::vec3(-0.5f, +0.5f, 0.0f), .Uv = glm::vec2(0.0f, 1.0f)});
+    _vertices.push_back({.Position = glm::vec3(+0.5f, +0.5f, 0.0f), .Uv = glm::vec2(1.0f, 1.0f)});
+    _vertices.push_back({.Position = glm::vec3(+0.0f, -0.5f, 0.0f), .Uv = glm::vec2(0.5f, 0.0f)});
 
     glCreateBuffers(1, &_vertexBuffer);
     glNamedBufferData(_vertexBuffer, _vertices.size() * sizeof(VertexPositionUv), _vertices.data(), GL_STATIC_DRAW);
@@ -49,6 +49,8 @@ bool HelloTriangleApplication::Load()
 
     glVertexArrayVertexBuffer(_inputLayout, 0, _vertexBuffer, 0, sizeof(VertexPositionUv));
     glVertexArrayElementBuffer(_inputLayout, _indexBuffer);
+
+    glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 
     return true;
 }

@@ -244,6 +244,8 @@ bool Application::Initialize()
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 
     glEnable(GL_FRAMEBUFFER_SRGB);
+    glCullFace(GL_BACK);
+    glFrontFace(GL_CCW);
 
     glClearColor(0.35f, 0.76f, 0.16f, 1.0f);
     glClearDepthf(1.0f);
