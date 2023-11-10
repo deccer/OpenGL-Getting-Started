@@ -1,8 +1,9 @@
 #include "HelloTriangleApplication.hpp"
 
 #include <glad/glad.h>
-#include <format>
 #include <spdlog/spdlog.h>
+
+#include <format>
 
 bool HelloTriangleApplication::Load()
 {
@@ -23,15 +24,11 @@ bool HelloTriangleApplication::Load()
 
     _simpleProgram = createProgramResult.value();
 
-    glCreateVertexArrays(1, &_inputLayout);
-
-    glEnableVertexArrayAttrib(_inputLayout, 0);
-    glVertexArrayAttribFormat(_inputLayout, 0, 3, GL_FLOAT, GL_FALSE, offsetof(VertexPositionUv, Position));
-    glVertexArrayAttribBinding(_inputLayout, 0, 0);
-
-    glEnableVertexArrayAttrib(_inputLayout, 1);
-    glVertexArrayAttribFormat(_inputLayout, 1, 2, GL_FLOAT, GL_FALSE, offsetof(VertexPositionUv, Uv));
-    glVertexArrayAttribBinding(_inputLayout, 1, 0);
+    _inputLayout = CreateInputLayout("PositionUv", std::to_array<const InputLayoutElement>(
+    {
+        { .AttributeIndex = 0, .ComponentCount = 3, .ComponentType = GL_FLOAT, .IsNormalized = GL_FALSE, .Offset = offsetof(VertexPositionUv, Position), .BindingIndex = 0 },
+        { .AttributeIndex = 1, .ComponentCount = 2, .ComponentType = GL_FLOAT, .IsNormalized = GL_FALSE, .Offset = offsetof(VertexPositionUv, Uv), .BindingIndex = 0 },
+    }));
 
     _vertices.push_back({.Position = glm::vec3(-0.5f, +0.5f, 0.0f), .Uv = glm::vec2(0.0f, 1.0f)});
     _vertices.push_back({.Position = glm::vec3(+0.5f, +0.5f, 0.0f), .Uv = glm::vec2(1.0f, 1.0f)});
@@ -47,8 +44,8 @@ bool HelloTriangleApplication::Load()
     glCreateBuffers(1, &_indexBuffer);
     glNamedBufferData(_indexBuffer, _indices.size() * sizeof(uint32_t), _indices.data(), GL_STATIC_DRAW);
 
-    glVertexArrayVertexBuffer(_inputLayout, 0, _vertexBuffer, 0, sizeof(VertexPositionUv));
-    glVertexArrayElementBuffer(_inputLayout, _indexBuffer);
+    _inputLayout.AddVertexBufferBinding(_vertexBuffer, 0, 0, sizeof(VertexPositionUv));
+    _inputLayout.AddIndexBufferBinding(_indexBuffer);
 
     glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 
@@ -67,7 +64,7 @@ void HelloTriangleApplication::Render()
 {
     Application::Render();
 
-    glBindVertexArray(_inputLayout);
+    _inputLayout.Bind();
     glBindProgramPipeline(_simpleProgram.Id);
 
     glDrawElements(GL_TRIANGLES, _indices.size(), GL_UNSIGNED_INT, nullptr);
@@ -139,4 +136,23 @@ std::expected<Program, std::string> HelloTriangleApplication::CreateProgram(
     glUseProgramStages(program.Id, GL_FRAGMENT_SHADER_BIT, program.FragmentShader);
 
     return program;
+}
+
+InputLayout HelloTriangleApplication::CreateInputLayout(
+    std::string_view label,
+    std::span<const InputLayoutElement> elements)
+{
+    InputLayout inputLayout = {};
+    inputLayout.Label = label;
+    glCreateVertexArrays(1, &inputLayout.Id);
+    glObjectLabel(GL_VERTEX_ARRAY, inputLayout.Id, label.size(), label.data());
+
+    for(auto& element : elements)
+    {
+        glEnableVertexArrayAttrib(inputLayout.Id, element.AttributeIndex);
+        glVertexArrayAttribFormat(inputLayout.Id, element.AttributeIndex, element.ComponentCount, element.ComponentType, element.IsNormalized, element.Offset);
+        glVertexArrayAttribBinding(inputLayout.Id, element.AttributeIndex, element.BindingIndex);
+    }
+
+    return inputLayout;
 }

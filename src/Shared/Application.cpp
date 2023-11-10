@@ -244,6 +244,7 @@ bool Application::Initialize()
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 
     glEnable(GL_FRAMEBUFFER_SRGB);
+    glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
     glFrontFace(GL_CCW);
 
@@ -280,6 +281,8 @@ void Application::Render()
 void Application::OnFramebufferResized()
 {
     spdlog::info("Framebuffer resized to {}_{}", framebufferWidth, framebufferHeight);
+
+    glViewport(0, 0, framebufferWidth, framebufferHeight);
 }
 
 void Application::OnKeyDown(
@@ -344,4 +347,6 @@ void Application::ToggleFullscreen()
         glfwSetWindowPos(_windowHandle, screenWidth / 2 - windowWidth / 2 + monitorLeft, screenHeight / 2 - windowHeight / 2 + monitorTop);
         glfwSetWindowSize(_windowHandle, windowWidth, windowHeight);
     }
+
+    Render();
 }

@@ -9,6 +9,8 @@ I would like to have an `Application` base class which looks like this
 ```cpp
 #pragma once
 
+#include <cstdint>
+
 struct GLFWwindow;
 
 class Application
@@ -376,6 +378,8 @@ void Application::Render()
 void Application::OnFramebufferResized()
 {
     spdlog::info("Framebuffer resized to {}_{}", framebufferWidth, framebufferHeight);
+
+    glViewport(0, 0, framebufferWidth, framebufferHeight);
 }
 
 void Application::OnKeyDown(
@@ -441,12 +445,12 @@ rather then letting the OS take care of that when you ALT+F4 the app.
 
 The methods `Update` and `Render` are the ones we will be handling our demo/example/guide code in to render stuff and to update things as they are changing.
 
-`OnFramebufferResized` is invoked whenever we resize the window. That leads to its framebuffer (the non client recangle area) being resized too and thats
-where we can hook into, to resize framebuffers or other resources which are depending on the framebuffer size.
+`OnFramebufferResized` is invoked whenever we resize the window. That leads to its framebuffer (the non client recangle area) being resized too and that's
+where we can hook into; to resize framebuffers or other resources which are depending on the framebuffer size.
 
 `OnKeyDown` and `OnKeyUp` are our callbacks when keys were pressed and released. Should be sufficient for this kind of guide as also mentioned before.
 
-We wanted `F11` to toggle windowed-window and fullscreen. Well there you have it.
+We wanted `F11` to toggle windowed-window and fullscreen, now we can.
 
 Basic application is not done yet. Let's also hookup the debug message callback, which will save our butts in the future. Alot of tutorials or blogs keep using
 so called `glCall` or `glCheck` macros which run `glGetError` - even that they mess up quite a bit, because that ancient function also needs to be called correctly.

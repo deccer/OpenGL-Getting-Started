@@ -3,13 +3,13 @@
 #include "../Shared/Application.hpp"
 #include "VertexPositionUv.hpp"
 #include "Program.hpp"
+#include "InputLayout.hpp"
 
 #include <vector>
 #include <string>
 #include <string_view>
 #include <expected>
-
-struct Program;
+#include <span>
 
 class HelloTriangleApplication final : public Application
 {
@@ -27,8 +27,11 @@ private:
         std::string_view label,
         const std::string& vertexShaderFilePath,
         const std::string& fragmentShaderFilePath);
+    InputLayout CreateInputLayout(
+        std::string_view label,
+        std::span<const InputLayoutElement> elements);
 
-    uint32_t _inputLayout = 0;
+    InputLayout _inputLayout;
     uint32_t _vertexBuffer = 0;
     uint32_t _indexBuffer = 0;
     std::vector<VertexPositionUv> _vertices;
