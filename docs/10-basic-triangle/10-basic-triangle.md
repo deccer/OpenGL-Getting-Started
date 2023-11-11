@@ -145,7 +145,7 @@ struct VertexPositionColor
     I believe I mentioned 'glm' before somewhere. It's the vectormaths library we are going to use. It has types for various constructs
     which come in handy in graphics programming such as vectors, quaternions and matrices.
 
-Lets compare that to something from [LearnOpenGL](https://learnopengl.com)
+Lets compare that to how other tutorials usually define vertices
 
 ```cpp
 float vertices[] = {
@@ -157,7 +157,8 @@ float vertices[] = {
 };
 ```
 
-Awful. Just awful.
+It's weird.
+
 In their example they also added uvs into the mix, which is fine. But just formatting this thing to figure out what is what
 makes no sense in my opinion. Yes the underlying datatype for all those things is `float`. 
 

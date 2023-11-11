@@ -1,40 +1,50 @@
 # Setup
 
 To render a triangle or the next star citizen on screen we need some application with a window
-to do it for us.
+where we can render our world into.
 
-Let's create a small application which handles most common tasks like
+Let's try to slowly build up an application which gets improved more and more over each chapter
+
+To start we create a small application which handles most common tasks like
 
 - creating a window
 - react to input
-- resizing should work
+- resizing should work in general, we dont want it to be perfect (that's a long story)
 - when it starts up, let it be centered and use 90% of the screen resolution
-- `Escape` will close it and `F11` will toggle fullscreen
+- `Escape` will close it
+- `F11` will toggle fullscreen
 
-We will be using [CMake](https://www.cmake.org) to be our project generator, `C++` our programming language of choice,
-[GLFW](https://www.glfw.org) our window and input glue, [GLAD](https://glad.dav1d.de/) our opengl loader
-and we will use all those things to come up with an `Application` class.
+We should also decide what tools and languages, extensions, editors and or IDEs we pick.
 
-On top of all that, we might be using [spdlog](https://github.com/gabime/spdlog) to handle logging.
-I can't stand `printf` or `std::cout` anymore. Logging is a solved problem. People will complain about its "slow" compile times,
-but this doesn't really matter here.
+We will be using the following languages, programs, extensions and libraries
 
-To display some debug data we wont be using the console window like everyone else.
-We will integrate [Dear Imgui](https://github.com/ocornut/imgui) instead, right away, because why not.
-You might want to use it in the future anyway, for showing values for debugging purposes
-or want to click a thing to change a thing while the program is running, so, why not integrate it right away, I will also explain how.
+- [C++](https://isocpp.org/get-started) as our main programming language
+- [GLSL](https://www.opengl.org/registry/doc/GLSLangSpec.4.60.pdf) our shading programming language, since we need to program some things for the `GPU`
+- [CMake](https://www.cmake.org) will be our project generator, to generate `C++` projects, which we can build with
+- [Visual Studio Code]() our IDE of choice, into which we will be installing the 
+- [CMake Tools](https://github.com/microsoft/vscode-cmake-tools) a Visual Studio extension which will be interfacing with cmake, no need to run cmake via cli then, which is quite nice
 
-We will also be using `debugbreak` a portable thing which can tell the debugger to break. Handy when we want to see the callstack
-to find the offending OpenGL function when it threw an error.
+Library wise we will be using
 
-Later we will be loading a model as well. For that we will be using [fastgltf](https://github.com/spnda/fastgltf)
+- [GLFW](https://www.glfw.org) our window and input glue
+- [GLAD](https://glad.dav1d.de/) our opengl functions loader
+- [GLM](https://github.com/g-truc/glm) will be our math library
+- [STB](https://github.com/nothings/stb.git) we will be using this to load images to create textures
+- [fastgltf](https://github.com/spnda/fastgltf) will be used later down the road to load glTF models from disk.
 
-As mentioned, we will be using `CMake` to handle/build our project. I will not explain what `CMake` is or how exactly it works, but
-in the following paragraph i will briefly show what is what here and there. Should be somewhat self explanatory.
+We will be adding some more fancy bits and bops in throughout the tour. Amongst those things are/will be
 
-I'm also assuming you know how to install it and are somewhat familiar with it using [Visual Studio Code](https://code.visualstudio.com/), [Visual Studio](https://visualstudio.microsoft.com/) or [Clion](https://www.jetbrains.com/clion/). VSCode needs a plugin to work with it. I can recommend [CMake Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools)
+- [spdlog](https://github.com/gabime/spdlog) to handle logging - i can't stand `printf` and or `std::cout` anymore. I prefer structured logging. You can read more here if you want to know more what that is
+- [debugbreak](https://github.com/scottt/debugbreak) a portable debug break implementation which we will be using for our error opengl problem handling
+- [Dear Imgui](https://github.com/ocornut/imgui) to show off some debug values in the window itself, rather than printeffing some nonsense into the console window, also allows us to build an actual useful UI, could potentially turn into an editor of sorts or just debug controls
+- [Tracy](https://github.com/wolfpld/tracy.git) a frame profiler which can and will show us some profiling data later on to see how fast things run
 
-Before we start, let me try to explain the intended project structure.
+
+I wont be explaining how to install `Visual Studio Code`, `Visual Studio`, `CLion`. I'm sure you can follow the links mentioned above and install the programs yourself according to their instructions.
+
+All the other things, from `GLFW` to `fastgltf` CMake will take care of it and download the necessary files.
+
+For the project itself I had the following project structure in mind, so that you can also see where goes what
 
 ```cpp
 ProjectRoot
@@ -47,6 +57,10 @@ ProjectRoot
 │   │   ├── Application.hpp               # or here
 │   │   └── CMakeLists.txt                # project file for the shared library
 │   │   01-HelloWindow
+│   │   ├── Data
+│   │   │   └── Shaders
+│   │   │       ├── Simple.vs.glsl        # vertex shader
+│   │   │       └── Simple.fs.glsl        # fragment shader
 │   │   ├── HelloWindowApplication.cpp    # our application bits for this project
 │   │   ├── HelloWindowApplication.hpp
 │   │   └── CMakeLists.txt                # project file for HelloWindow
@@ -57,13 +71,3 @@ ProjectRoot
 │   ...and so forth...
 └── CMakeLists.txt                        # Thats our solution file
 ```
-
-All Projects will be in a separate folder, named so that you can follow along, hopefully.
-
-`Shared` will contain all the things which we might be sharing across the projects. This repo will contain the final thing.
-There won't be dedicated git branches per chapter or something like that. However I will explain everything in this guide
-and we will start from a project skeleton and progressively add things to it and modify things as we go.
-
-???+ "Explain project setup"
- 
-     Should I explain in detail how all this CMake nonsense is to be setup, step by step?

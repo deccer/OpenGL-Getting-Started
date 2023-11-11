@@ -1,281 +1,158 @@
 # Basic Application
 
-Let's prepare a base application to handle all the glue around the renderer.
+### Initial CMake setup
 
-An application is just a shell of functions which do things to run the things we want.
-I would like to have an `Application` base class which looks like this
+If you want to follow from scratch, let me explain how I did it.
 
-### Application.hpp
-```cpp
-#pragma once
+You pick a folder somewhere on your drives. Let's call the folder `~/Projects/OpenGLGettingStarted` (on Linux) or `C:\Users\YourUserName\Documents\Projects\OpenGLGettingStarted` (on Windows).
 
-#include <cstdint>
-
-struct GLFWwindow;
-
-class Application
-{
-public:
-    void Run();
-
-protected:
-    bool Initialize();
-    bool Load();
-    void Unload();
-
-    void Update();
-    void Render();
-
-    virtual void OnFramebufferResized();
-    virtual void OnKeyDown(
-        int32_t key,
-        int32_t modifiers,
-        int32_t scancode);
-    virtual void OnKeyUp(
-        int32_t key,
-        int32_t modifiers,
-        int32_t scancode);
-
-private:
-    GLFWwindow* _windowHandle;
-    void ToggleFullscreen();
-};
+Create a folder/file structure like this. Leave Application.{hpp/cpp} empty for now, I will explain in a minute what we do there.
+```
+OpenGLGettingStarted
+├── lib
+│   └── CMakeLists.txt
+├── src
+│   ├── Shared
+│   │   ├── Application.cpp
+│   │   ├── Application.hpp
+│   │   └── CMakeLists.txt
+└── CMakeLists.txt
 ```
 
-which all the other demos/examples/tutorials derive from.
+So, `OpenGLGettingStarted/CMakeLists.txt` is our main project file - you could compare it to `Visual Studio`s solution file, if you worked with `VS` before. This one should look like this
 
-Only one public method, which will be the entry point for the `main` function.
-
-Since we will be using `GLFW` and we only need to support one window, `Application` will
-hold the native glfw handle to the window.
-
-And the rest of the application skellington.
-
-### Application.cpp
-```cpp
-#include "Application.hpp"
-
-void Application::Run()
-{
-    if (!Initialize())
-    {
-        return;
-    }
-
-    if (!Load())
-    {
-        return;
-    }
-
-    while (true)
-    {
-        Update();
-
-        Render();
-    }
-
-    Unload();
-}
-
-bool Application::Initialize()
-{
-    return true;
-}
-
-bool Application::Load()
-{
-    return true;
-}
-
-void Application::Unload()
-{
-
-}
-
-void Application::Update()
-{
-
-}
-
-void Application::Render()
-{
-
-}
+```cmake title="OpenGLGettingStarted/CMakeLists.txt"
+--8<-- "CMakeLists.txt:1:8"
 ```
 
-I like to have `Initialize` and `Load` two separate things. `Initialize` contains things which are usually only necessary to call during startup of the application.
-Things like creating a window, initializing a render context, fetching device capabilities etc. and `Load` will contain things which can only be loaded
-when there is an active render context going on already. Things like loading and compiling shaders, textures and other resources.
+Then we will need `OpenGLGettingStarted/lib/CMakeLists.txt` which has a bit more content since we need to load a bunch of dependencies, as mentioned above, `GLFW`, `GLAD` and so forth
 
-As you can see all methods but `Run` are protected. That means we won't be able to call them directly.
-And instantiating the `Application` class like that won't make much sense either.
+```cmake title="OpenGLGettingStarted/lib/CMakeLists.txt"
+--8<-- "lib/CMakeLists.txt"
+```
 
-Let's keep these 2 files in `src/Shared` since we want to reuse them for all the projects we make.
+FetchContent will clone the repos according to what was specified and some options are set for one or another library, like Tracy to enable tracing, or for glad to provide bindings for OpenGL 4.6
+
+As mentioned earlier I would like to use a base class `Application` which handles input and windowing things, as well as provides a ready to use opengl context for us to use.
+
+That means we create a `src` folder and within a `Shared` folder where we will create those two files `Application.hpp` and `Application.cpp`
+
+`Shared` is turned into a target which we can link with all future applications to provide Application-functionality to all of them, for that we need yet another `CMakeLists.txt`.
+Which will look like that
+
+```cmake title="OpenGLGettingStarted/src/Shared/CMakeLists.txt"
+--8<-- "src/Shared/CMakeLists.txt"
+```
+
+As you can see it creates a library, and needs `Application.cpp` and it depends on glfw, glad, spdlog and debugbreak.
+If we have, for some reason, more things we would like to share across all other applications/examples later on, perhaps some Input class of some sort, then it would go in there too
+as `Input.cpp` to be compiled into the shared library.
+
+That applies to the other `CMakeLists.txt` too by the way. When we add new .cpp files to the project they should be added to the target. `Visual Studio` and `Clion` (since they support CMake out of the box) might add .cpp files automatically for you.
+
+Ok then two things are missing. Bear with me its a little bit of code incoming :)
+
+```cpp title="OpenGLGettingStarted/src/Shared/Application.hpp"
+--8<-- "src/Shared/Application.hpp"
+```
+
+We said we wanted to make an Application base class which will handle windowing and input for us, and perhaps the odd other thing too.
+
+`Run`
+  
+: Thats our only gate to the outside, thats what `main` will call in our actual examples later on
+
+`ReadTextFromFile`
+
+: Used to load text, wait for it, from a file, this will come in handy later when we load shader scripts from disk
+
+`Initialize`
+
+: thats the method where we initialize application relevant things like, creating the main window, adjusting it to be in center, hooking up callbacks, since we use glfw and asking for an OpenGL context
+
+`Load`
+ 
+: Thats empty in here for now, but this one is supposed to be called after `Initialize` and you would typically do things like loading programs, loading textures or levels before rendering anything
+
+`Update`
+
+: Is supposed to be for your game/business logic, where you update physics, ask the network for new state or prepare state for the gpu to render, like preparing a matrix buffer which contains all transforms of your world objects
+
+`Render`
+
+: Here goes all the render code, mostly draw calls
+
+`OnFramebufferResized`
+
+: We eventually need to handle when you resize the window, or when we go from fullscreen to windowed mode etc, that goes here, thats the spot where you want to recreate your render targets or viewports
+
+`OnKeyDown/OnKeyUp`
+: should be self explanatory
+
+`OnOpenGLDebugMessage`
+
+: OpenGL has this neat mechanism which is called `debug message callback`, where it will report a message when some state doesnt make sense for OpenGL and we can react to that. In our case, we will use that to halt the debugger (hence debugbreak is used) so that we are able to follow the call stack to see who the offending opengl call is causing trouble - which in most cases isnt OpenGL's fault but yours :) because you passed a wrong value to a glXXX call. We will see that later on
+
+`ToggleFullsceen`
+
+: As the name suggests, it goggles the window to/from fullscreen/windowed
+
+There is also this `ApplicationAccess` thing. That only exists in `Application.cpp` which we will see next and I will explain there what is is.
+
+```cpp title="OpenGLGettingStarted/src/Shared/Application.cpp"
+--8<-- "src/Shared/Application.cpp"
+```
+
+!!! danger "TODO"
+
+    Elaborate a bit more on all the methods in Application.cpp
+
+
+!!! danger "TODO"
+
+    Explain OpenGL context + glad
+
+
+!!! danger "TODO"
+
+    Explain the first glXXX calls
+
+
+!!! danger "TODO"
+
+    Explain glDebugMessageCallback a bit more + the big thing i use there as the callback
+
+
+### HelloWindowApplication
 
 Now is the time to create an actual project.
 
-Let's call it HelloWindow and lets put it in `src/01-HelloWindow`.
+Let's call the target HelloWindow and lets put it in `src/01-HelloWindow`.
 
 We need
 
-### HelloWindowApplication.hpp
-```cpp
-#pragma once
-
-#include "../Shared/Application.hpp"
-
-class HelloWindowApplication : public Application
-{
-protected:
-    void Update();
-};
+```cpp title="src/01-HelloWindow/HelloWindowApplication.hpp"
+--8<-- "src/01-HelloWindow/HelloWindowApplication.hpp"
 ```
 
 and
 
-### HelloWindowApplication.cpp
-
-```cpp
-#include "HelloWindowApplication.hpp"
-
-void HelloWindowApplication::Update()
-{
-    Application::Update();
-}
+```cpp title="src/01-HelloWindow/HelloWindowApplication.cpp"
+--8<-- "src/01-HelloWindow/HelloWindowApplication.cpp"
 ```
 
 and also
 
-### Main.cpp
-```cpp
-#include "HelloWindowApplication.hpp"
-
-int32_t main(
-    [[maybe_unused]] int32_t argc,
-    [[maybe_unused]] char* argv[])
-{
-    HelloWindowApplication application;
-    application.Run();
-    return 0;
-}
+```cpp title="src/01-HelloWindow/Main.cpp"
+--8<-- "src/01-HelloWindow/Main.cpp"
 ```
 
 All that should compile, but doesn't do anything yet, obviously.
 
-As mentioned earlier being sick of `printf` or `std::cout` we will use `spdlog` everywhere, where things should be output somehow.
-Errors, warnings or the occasional status.
+!!! failure "Attention. Attention"
 
-With that in mind, lets fill out the rest of the skellington that is the `Application` class.
+    From here onwards is subject to change and under construction. Ignore please :)
 
-### Application::Run
-```cpp
-void Application::Run()
-{
-    if (!Initialize())
-    {
-        return;
-    }
-
-    spdlog::info("App: Initialized");
-
-    if (!Load())
-    {
-        return;
-    }
-
-    spdlog::info("App: Loaded");
-
-    while (!glfwWindowShouldClose(_windowHandle))
-    {
-        glfwPollEvents();
-
-        Update();
-
-        Render();
-
-        glfwSwapBuffers(_windowHandle);
-    }
-
-    spdlog::info("App: Unloading");
-
-    Unload();
-
-    spdlog::info("App: Unloaded");
-}
-```
-
-### Application::Initialize
-```cpp
-bool Application::Initialize()
-{
-    if (glfwInit() == GLFW_FALSE)
-    {
-        spdlog::error("Glfw: Unable to initialize");
-        return false;
-    }
-
-    glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-    glfwWindowHint(GLFW_DECORATED, GLFW_TRUE);
-    glfwWindowHint(GLFW_SCALE_TO_MONITOR, GLFW_TRUE);
-
-    auto primaryMonitor = glfwGetPrimaryMonitor();
-    auto videoMode = glfwGetVideoMode(primaryMonitor);
-
-    auto screenWidth = videoMode->width;
-    auto screenHeight = videoMode->height;
-
-    auto windowWidth = static_cast<int32_t>(static_cast<float>(screenWidth) * 0.8f);
-    auto windowHeight = static_cast<int32_t>(static_cast<float>(screenHeight) * 0.8f);
-
-    _windowHandle = glfwCreateWindow(windowWidth, windowHeight, "OpenGL - Getting Started", nullptr, nullptr);
-    if (_windowHandle == nullptr)
-    {
-        const char* errorDescription = nullptr;
-        auto errorCode = glfwGetError(&errorDescription);
-        if (errorCode != GLFW_NO_ERROR)
-        {
-            spdlog::error("GLFW: Unable to create window Details_{}", errorDescription);
-        }
-        return false;
-    }
-
-    glfwSetWindowUserPointer(_windowHandle, this);
-
-    int32_t monitorLeft = 0;
-    int32_t monitorTop = 0;
-    glfwGetMonitorPos(primaryMonitor, &monitorLeft, &monitorTop);
-    glfwSetWindowPos(_windowHandle, screenWidth / 2 - windowWidth / 2 + monitorLeft, screenHeight / 2 - windowHeight / 2 + monitorTop);
-
-    glfwSetFramebufferSizeCallback(_windowHandle, ApplicationAccess::FramebufferResizeCallback);
-    glfwSetKeyCallback(_windowHandle, ApplicationAccess::KeyCallback);
-
-    glfwMakeContextCurrent(_windowHandle);
-    gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-
-    glEnable(GL_FRAMEBUFFER_SRGB);
-    glCullFace(GL_BACK);
-    glFrontFace(GL_CCW);
-
-    glClearColor(0.35f, 0.76f, 0.16f, 1.0f);
-    glClearDepthf(1.0f);
-
-    return true;
-}
-```
-
-Don't forget to include all the things required here.
-```cpp
-#include "Application.hpp"
-
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <spdlog/spdlog.h>
-```
 
 The important bits here are, initialize `GLFW`, grab the screen resolution of the current primary monitor so that we can center the window
 on that primary screen and also resize it to be 80% of the resolution. I really hate windows spawning at random locations everytime you start the application.
