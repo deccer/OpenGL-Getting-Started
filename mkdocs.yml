@@ -7,8 +7,9 @@ site_description: OpenGL Getting Started
 copyright: Copyright 2023 deccer
 theme:
   name: material
+  logo: https://cdn-icons-png.flaticon.com/512/1864/1864530.png
   font:
-    text: Roboto Flex
+    text: Actor
     code: Roboto Mono
   palette:
     scheme: slate
@@ -16,8 +17,11 @@ theme:
     accent: yellow
   language: en
   features:
+    - navigation.sections
+    - navigation.indexes
     - navigation.tabs
-    - navigation.instant.progress
+    - navigation.tabs.sticky
+    - navigation.footer
   icon:
     admonition:
       note: fontawesome/solid/note-sticky
@@ -57,7 +61,9 @@ markdown_extensions:
   - pymdownx.highlight
   - pymdownx.inlinehilite
   - pymdownx.superfences
-  - pymdownx.snippets
+  - pymdownx.snippets:
+      base_path:
+        - ""
   - pymdownx.tabbed:
       alternate_style: true
       combine_header_slug: true
@@ -68,6 +74,7 @@ markdown_extensions:
       mode: view
   - pymdownx.betterem:
       smart_enable: all
+  - def_list
 nav:
   - Home: index.md
   - Setup:
