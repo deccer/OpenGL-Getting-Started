@@ -1,3 +1,10 @@
+---
+tags:
+  - GLFW
+  - OpenGL
+  - GLAD
+---
+
 # Basic Application
 
 ### Initial CMake setup
@@ -58,36 +65,87 @@ Ok then two things are missing. Bear with me its a little bit of code incoming :
 
 We said we wanted to make an Application base class which will handle windowing and input for us, and perhaps the odd other thing too.
 
+
+
 `Run`
   
 : Thats our only gate to the outside, thats what `main` will call in our actual examples later on
 
+
 `ReadTextFromFile`
 
-: Used to load text, wait for it, from a file, this will come in handy later when we load shader scripts from disk
+: This reads text from a file
+
+  ```cpp title="OpenGLGettingStarted/src/Shared/Application.cpp"
+  --8<-- "src/Shared/Application.cpp:138:155"
+  ```
 
 `Initialize`
 
 : thats the method where we initialize application relevant things like, creating the main window, adjusting it to be in center, hooking up callbacks, since we use glfw and asking for an OpenGL context
 
+  ```cpp title="OpenGLGettingStarted/src/Shared/Application.cpp"
+  --8<-- "src/Shared/Application.cpp:191:255"
+  ```
+
 `Load`
  
 : Thats empty in here for now, but this one is supposed to be called after `Initialize` and you would typically do things like loading programs, loading textures or levels before rendering anything
 
+  ```cpp title="OpenGLGettingStarted/src/Shared/Application.cpp"
+  --8<-- "src/Shared/Application.cpp:257:260"
+  ```
+
+`Unload`
+
+: All the resources we loaded in `Load` should be unloaded too at some point, that's what `Unload` is there for. Many people rely on the operating system to clean up after the program has shut down, I don't.
+
+  ```cpp title="OpenGLGettingStarted/src/Shared/Application.cpp"
+  --8<-- "src/Shared/Application.cpp:262:270"
+  ```
+
 `Update`
 
+
 : Is supposed to be for your game/business logic, where you update physics, ask the network for new state or prepare state for the gpu to render, like preparing a matrix buffer which contains all transforms of your world objects
+
+  ```cpp title="OpenGLGettingStarted/src/Shared/Application.cpp"
+  --8<-- "src/Shared/Application.cpp:272:274"
+  ```
 
 `Render`
 
 : Here goes all the render code, mostly draw calls
 
+  ```cpp title="OpenGLGettingStarted/src/Shared/Application.cpp"
+  --8<-- "src/Shared/Application.cpp:276:279"
+  ```
+
 `OnFramebufferResized`
 
-: We eventually need to handle when you resize the window, or when we go from fullscreen to windowed mode etc, that goes here, thats the spot where you want to recreate your render targets or viewports
+: When you resize the window, be it dragging a corner to increase/decrease the window size, When the window size is changed, its non-client-rectangle area (the window part which isnt the border or system menu/window title bar). `GLFW` detects that and calls our function (`ApplicationAccess::FramebufferResizeCallback`) which will check for valid values
+  and calls this method. In this method we can then safely assume the window has been resized to proper values and we can do whatever we like in here. 
+  
 
-`OnKeyDown/OnKeyUp`
+  ```cpp title="OpenGLGettingStarted/src/Shared/Application.cpp"
+  --8<-- "src/Shared/Application.cpp:281:286"
+  ```
+
+
+`OnKeyDown`
 : should be self explanatory
+
+  ```cpp title="OpenGLGettingStarted/src/Shared/Application.cpp"
+  --8<-- "src/Shared/Application.cpp:288:302"
+  ```
+
+`OnKeyUp`
+: should be self explanatory
+
+  ```cpp title="OpenGLGettingStarted/src/Shared/Application.cpp"
+  --8<-- "src/Shared/Application.cpp:304:309"
+  ```
+
 
 `OnOpenGLDebugMessage`
 

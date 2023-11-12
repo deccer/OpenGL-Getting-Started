@@ -79,7 +79,10 @@ nav:
   - Home: index.md
   - Setup:
       - Setup: 00-setup/00-setup.md
-      - Basic Application: 00-setup/01-basic-application.md
-  - Basic Triangle:
-      - Basic Triangle: 10-basic-triangle/10-basic-triangle.md
+  - Basics:
+      - Basic Window: 01-basics/01-basic-window.md
+      - Basic Window With Triangle: 01-basics/02-basic-window-and-triangle.md
+  #- Basic Application: 00-setup/01-basic-application.md
+  #- Basic Triangle:
+  #    - Basic Triangle: 10-basic-triangle/10-basic-triangle.md
   - About: about.md

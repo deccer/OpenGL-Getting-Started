@@ -7,3 +7,5 @@ How to get started with OpenGL in 2023.
 - Frog Logo from: <a href="https://www.flaticon.com/free-icons/frog" title="frog icons">Frog icons created by Freepik - Flaticon</a>
 
 - Pink Frog below Intro: <a href="https://www.flaticon.com/free-icons/frog" title="frog icons">Frog icons created by Flat Icons - Flaticon</a>
+
+- Ugly Windows 8 Picture <a href="https://www.equestionanswers.com">From here</a>

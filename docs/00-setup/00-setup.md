@@ -40,34 +40,9 @@ We will be adding some more fancy bits and bops in throughout the tour. Amongst 
 - [Tracy](https://github.com/wolfpld/tracy.git) a frame profiler which can and will show us some profiling data later on to see how fast things run
 
 
-I wont be explaining how to install `Visual Studio Code`, `Visual Studio`, `CLion`. I'm sure you can follow the links mentioned above and install the programs yourself according to their instructions.
+I wont be explaining how to install `Visual Studio Code`, `Visual Studio`, `CLion`.
+I'm sure you can follow the links mentioned above and install the programs yourself according to their instructions.
 
-All the other things, from `GLFW` to `fastgltf` CMake will take care of it and download the necessary files.
+What I will do is go from a everything-in-one file to separating things into what makes sense way
 
-For the project itself I had the following project structure in mind, so that you can also see where goes what
-
-```cpp
-ProjectRoot
-├── lib
-│   └── CMakeLists.txt                    # here we describe all third party dependencies
-│                                         # like glfw, glad, spdlog, imgui, ...
-├── src
-│   ├── Shared
-│   │   ├── Application.cpp               # guess what is in here
-│   │   ├── Application.hpp               # or here
-│   │   └── CMakeLists.txt                # project file for the shared library
-│   │   01-HelloWindow
-│   │   ├── Data
-│   │   │   └── Shaders
-│   │   │       ├── Simple.vs.glsl        # vertex shader
-│   │   │       └── Simple.fs.glsl        # fragment shader
-│   │   ├── HelloWindowApplication.cpp    # our application bits for this project
-│   │   ├── HelloWindowApplication.hpp
-│   │   └── CMakeLists.txt                # project file for HelloWindow
-│   │   02-HelloTriangle
-│   │   ├── HelloTriangleApplication.cpp
-... ... ...
-│   │   └── CMakeLists.txt                # project file for HelloTriangle
-│   ...and so forth...
-└── CMakeLists.txt                        # Thats our solution file
-```
+So let's start with a basic window setup.
