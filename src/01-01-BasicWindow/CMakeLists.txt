@@ -10,4 +10,4 @@ endif()
 
 target_include_directories(spdlog PUBLIC include)
 
-target_link_libraries(01-01-BasicWindow PRIVATE Shared glad glfw spdlog)
+target_link_libraries(01-01-BasicWindow PRIVATE glad glfw spdlog)
