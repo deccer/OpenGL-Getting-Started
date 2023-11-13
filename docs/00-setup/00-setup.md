@@ -34,7 +34,7 @@ Library wise we will be using
 
 We will be adding some more fancy bits and bops in throughout the tour. Amongst those things are/will be
 
-- [spdlog](https://github.com/gabime/spdlog) to handle logging - i can't stand `printf` and or `std::cout` anymore. I prefer structured logging. You can read more here if you want to know more what that is
+- [spdlog](https://github.com/gabime/spdlog) to handle logging - i can't stand `printf` and or `std::cout` anymore. Logging is a solved problem, no need to reinvent the wheel again.
 - [debugbreak](https://github.com/scottt/debugbreak) a portable debug break implementation which we will be using for our error opengl problem handling
 - [Dear Imgui](https://github.com/ocornut/imgui) to show off some debug values in the window itself, rather than printeffing some nonsense into the console window, also allows us to build an actual useful UI, could potentially turn into an editor of sorts or just debug controls
 - [Tracy](https://github.com/wolfpld/tracy.git) a frame profiler which can and will show us some profiling data later on to see how fast things run
