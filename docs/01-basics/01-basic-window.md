@@ -260,7 +260,7 @@ Then we will be setting some of that mentioned OpenGL state explicitly to their 
 
     Explain the states, explain srgb here?
 
-### Mainloop
+### Main Loop
 
 Next block, we are also almost finished, is the so called game loop, a simple loop which runs as long as the window is upen. It refreshes all state `GLFW` knows about like which keys have been pressed, where is the window being moved to or resized upto what dimensions or whether a joystick has been plugged in amongst other things.
 
@@ -280,7 +280,6 @@ What happens after we exit that game loop?
 
 Exactly, we clean up. Destroy the main window and terminate `GLFW` so that it can clean up its internal state.
 
-And then we return to the OS.
+And then we return to the `OS``.
 
 In the next chapter we will split that one main function up into more logical bits and start to setup a triangle.
-
