@@ -9,7 +9,7 @@ theme:
   name: material
   logo: https://cdn-icons-png.flaticon.com/512/1864/1864530.png
   font:
-    text: Actor
+    text: Roboto
     code: Roboto Mono
   palette:
     scheme: slate
