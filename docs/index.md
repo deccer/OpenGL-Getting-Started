@@ -2,6 +2,10 @@
 
 ![BasicTriangle](https://raw.githubusercontent.com/deccer/opengl-getting-started/main/screenshots/screenshot-basic-triangle.png)
 
+!!! note "Attention"
+
+    This thing is still work in progress...
+
 So, what is this?
 
 I am very much annoyed by all sorts of OpenGL tutorials out there in the wild. All of them do cover OpenGL and you can
@@ -15,7 +19,7 @@ which is a huge annoyance since you have to somewhat keep mental track of OpenGL
 
 OpenGL 4.6 means people using macs are out of luck. There is simply no support for that version of OpenGL on Apple products.
 
-Its not just the old version of OpenGL used in these tutorials, its also the lack of how the development environment should be setup
+It's not just the old version of OpenGL used in these tutorials, its also the lack of how the development environment should be setup
 at the beginning to help the user detect problems right away or show how they can help themselves. 
 
 And there is another big flaw is that they all use float arrays to explain vertices. That's weird and unreadable.
