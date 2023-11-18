@@ -6,10 +6,6 @@ find_package(OpenGL REQUIRED)
 
 #- GLFW ---------------------------------------------------------------------
 
-option(GLFW_BUILD_TESTS "" OFF)
-option(GLFW_BUILD_DOCS "" OFF)
-option(GLFW_INSTALL "" OFF)
-option(GLFW_BUILD_EXAMPLES "" OFF)
 FetchContent_Declare(
     glfw
     GIT_REPOSITORY https://github.com/glfw/glfw
@@ -17,8 +13,11 @@ FetchContent_Declare(
     GIT_SHALLOW    TRUE
     GIT_PROGRESS   TRUE
 )
-
 message("Fetching glfw")
+set(GLFW_BUILD_TESTS OFF CACHE BOOL "")
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "")
+set(GLFW_INSTALL OFF CACHE BOOL "")
+set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "")
 FetchContent_MakeAvailable(glfw)
 
 #- GLAD ---------------------------------------------------------------------
@@ -110,13 +109,12 @@ FetchContent_Declare(
     GIT_PROGRESS    TRUE
 )
 
+message("Fetching tracy")
 set(TRACY_ENABLE ON CACHE BOOL "Enable profiling")
 #set(TRACY_NO_SYSTEM_TRACING ON CACHE BOOL "Disable System Tracing")
-set(TRACY_ONLY_IPV4 ON CACHE BOOL "IPv4 only")
-option(TRACY_ENABLE "Enable profiling" ON)
-#option(TRACY_NO_SYSTEM_TRACING "Disable System Tracing" ON)
-option(TRACY_ONLY_IPV4 "IPv4 only" ON)
-message("Fetching tracy")
+set(TRACY_ONLY_IPV4 ON CACHE BOOL "" FORCE)
+set(TRACY_ONLY_LOCALHOST ON CACHE BOOL "" FORCE)
+set(TRACY_NO_FRAME_IMAGE ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(tracy)
 
 #- DEBUGBREAK ---------------------------------------------------------------------
