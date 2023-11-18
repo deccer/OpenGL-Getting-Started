@@ -59,12 +59,12 @@ Our vertices are usually collections of `Vertex` and those are sent over to the 
 Let's declare that thing right after we initialized `OpenGL` with default values after `glClearDepth(1.0f);`
 
 ```cpp
---8<-- "src/01-02-BasicWindowAndTriangle/Main.cpp:186:191"
+--8<-- "src/01-02-BasicWindowAndTriangle/Main.cpp:187:192"
 ```
 
 Those collections are stored in a buffer. The `GPU` can access them to retrieve whatever information is stored in them, in this case vertices and the buffer in this specific instance is called `vertex buffer`.
 
-Buffers are a generic thing in `OpenGL`, a blob of memory with size if you will.
+Buffers are a generic `OpenGL` object, referring to a blob of memory with size if you will.
 
 !!! note "Explain buffers here, perhaps in more detail"
 
@@ -105,7 +105,7 @@ You can source vertex data from one or many vertex buffers, thats what the `glVe
 Last but not least, we associate our vertex buffer with our input layout.
 
 ```cpp
---8<-- "src/01-02-BasicWindowAndTriangle/Main.cpp:208:208"
+--8<-- "src/01-02-BasicWindowAndTriangle/Main.cpp:209:209"
 ```
 
 !!! danger "Exercise"
@@ -127,7 +127,7 @@ The actual coordinates on the screen are achieved when the normalized device coo
 Shaders are programs which run on the `GPU`. We can modify them in order to let them do what we want. In case of the vertex shader we want to it to position our vertices and pass the color of each vertex onto the fragment shader (will talk about it in a second). Therefore the shader code looks rather simple.
 
 ```cpp
---8<-- "src/01-02-BasicWindowAndTriangle/Main.cpp:210:227"
+--8<-- "src/01-02-BasicWindowAndTriangle/Main.cpp:211:228"
 ```
 
 For this example I put the shader code right into the actual source code, usually those programs are separate files, stored on disk somewhere with a proper filename to indicate which program it is.
@@ -164,8 +164,15 @@ For that let's write a little helper function, since we will be using it to crea
 
 Let's put it below where we declared our `VertexPositionColor` type.
 
-What does it do? It creates an `OpenGL` object, we will pass the shader source along, 
+What does it do? It creates an `OpenGL` object to represent a program, we will pass the shader source along, as well as what shader program exactly, vertex shader, fragment shader or compute shader. It will compile and link the program and check whether there was a problem or not.
+If there was problem it will be returned as error message and if everything was alright we will
+get back the program itself.
 
+Here is how we use it to create the vertex shader we need
+
+```cpp
+--8<-- "src/01-02-BasicWindowAndTriangle/Main.cpp:242:248"
+```
 
 ### Tesselation Control Stage
 
@@ -201,12 +208,30 @@ The former defaults to no face culling on opengl, that means front and backfaces
 We did setup those things too here
 
 ```cpp
---8<-- "src/01-02-BasicWindowAndTriangle/Main.cpp:179:181"
+--8<-- "src/01-02-BasicWindowAndTriangle/Main.cpp:180:182"
 ```
 
 ### Fragment Shader
 
 ![Fragment Shader](graphics-pipeline-07-fragment-shader.png)
+
+The fragment shader takes the fragments from the rasterizer stage and "colors" them in this stage. That's what most of the time is happening here anyway.
+
+The fragment shader is also an object we create, similar to the vertex shader
+
+```cpp
+--8<-- "src/01-02-BasicWindowAndTriangle/Main.cpp:250:256"
+```
+
+But with just those 2 programs we cannot do much. We need to hook them up in a program pipeline.
+
+With shader program pipelines shader programs can be mix and matched together like you want, without having to recreate pairs of vertex/fragment shaders for instance, ie. Create 1 vertex shader program and combine it with various fragment shaders, like for post effects.
+
+Let's create that program pipeline
+
+```cpp
+--8<-- "src/01-02-BasicWindowAndTriangle/Main.cpp:258:261"
+```
 
 ### Tests and Blending
 

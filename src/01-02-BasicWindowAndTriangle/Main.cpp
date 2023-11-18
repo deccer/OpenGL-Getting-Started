@@ -184,11 +184,6 @@ int main(
     glClearColor(0.35f, 0.76f, 0.16f, 1.0f);
     glClearDepthf(1.0f);
 
-    auto label = "Default Framebuffer"sv;
-    glObjectLabel(GL_FRAMEBUFFER, 0, label.size(), label.data());
-    label = "Default InputLayout"sv;
-    glObjectLabel(GL_VERTEX_ARRAY, 0, label.size(), label.data());
-
     std::array<VertexPositionColor, 3> vertices =
     {
         VertexPositionColor{ .Position = glm::vec3(-0.5f, +0.5f, 0.0f), .Color = glm::vec3(1.0f, 0.2f, 1.0f) },
