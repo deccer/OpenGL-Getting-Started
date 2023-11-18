@@ -142,7 +142,7 @@ int main(
     int32_t monitorTop = 0;
     glfwGetMonitorPos(primaryMonitor, &monitorLeft, &monitorTop);
     glfwSetWindowPos(windowHandle, screenWidth / 2 - windowWidth / 2 + monitorLeft, screenHeight / 2 - windowHeight / 2 + monitorTop);
-
+    
     glfwSetFramebufferSizeCallback(windowHandle, [](
         [[maybe_unused]] GLFWwindow* window,
         int32_t framebufferWidth,
@@ -167,6 +167,11 @@ int main(
     glfwMakeContextCurrent(windowHandle);
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 
+    int32_t framebufferWidth = 0;
+    int32_t framebufferHeight = 0;
+    glfwGetFramebufferSize(windowHandle, &framebufferWidth, &framebufferHeight);
+    glViewport(0, 0, framebufferWidth, framebufferHeight);
+
     glDebugMessageCallback(DebugMessageCallback, nullptr);
     glEnable(GL_DEBUG_OUTPUT);
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
@@ -179,6 +184,11 @@ int main(
     glClearColor(0.35f, 0.76f, 0.16f, 1.0f);
     glClearDepthf(1.0f);
 
+    auto label = "Default Framebuffer"sv;
+    glObjectLabel(GL_FRAMEBUFFER, 0, label.size(), label.data());
+    label = "Default InputLayout"sv;
+    glObjectLabel(GL_VERTEX_ARRAY, 0, label.size(), label.data());
+
     std::array<VertexPositionColor, 3> vertices =
     {
         VertexPositionColor{ .Position = glm::vec3(-0.5f, +0.5f, 0.0f), .Color = glm::vec3(1.0f, 0.2f, 1.0f) },
@@ -188,7 +198,7 @@ int main(
 
     uint32_t vertexBuffer = 0;
     glCreateBuffers(1, &vertexBuffer);
-    glNamedBufferData(vertexBuffer, vertices.size() * sizeof(VertexPositionColor), vertices.data(), GL_STATIC_DRAW);
+    glNamedBufferStorage(vertexBuffer, vertices.size() * sizeof(VertexPositionColor), vertices.data(), GL_MAP_WRITE_BIT);
 
     uint32_t inputLayout = 0;
     glCreateVertexArrays(1, &inputLayout);
