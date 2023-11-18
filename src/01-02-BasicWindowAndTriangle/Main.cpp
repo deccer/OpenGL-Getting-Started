@@ -179,6 +179,30 @@ int main(
     glClearColor(0.35f, 0.76f, 0.16f, 1.0f);
     glClearDepthf(1.0f);
 
+    std::array<VertexPositionColor, 3> vertices =
+    {
+        VertexPositionColor{ .Position = glm::vec3(-0.5f, +0.5f, 0.0f), .Color = glm::vec3(1.0f, 0.2f, 1.0f) },
+        VertexPositionColor{ .Position = glm::vec3(+0.0f, -0.5f, 0.0f), .Color = glm::vec3(0.2f, 1.0f, 1.0f) },
+        VertexPositionColor{ .Position = glm::vec3(+0.5f, +0.5f, 0.0f), .Color = glm::vec3(1.0f, 1.0f, 0.2f) }        
+    };
+
+    uint32_t vertexBuffer = 0;
+    glCreateBuffers(1, &vertexBuffer);
+    glNamedBufferData(vertexBuffer, vertices.size() * sizeof(VertexPositionColor), vertices.data(), GL_STATIC_DRAW);
+
+    uint32_t inputLayout = 0;
+    glCreateVertexArrays(1, &inputLayout);
+
+    glEnableVertexArrayAttrib(inputLayout, 0);
+    glVertexArrayAttribFormat(inputLayout, 0, 3, GL_FLOAT, GL_FALSE, offsetof(VertexPositionColor, Position));
+    glVertexArrayAttribBinding(inputLayout, 0, 0);        
+
+    glEnableVertexArrayAttrib(inputLayout, 1);
+    glVertexArrayAttribFormat(inputLayout, 1, 3, GL_FLOAT, GL_FALSE, offsetof(VertexPositionColor, Color));
+    glVertexArrayAttribBinding(inputLayout, 1, 0);    
+
+    glVertexArrayVertexBuffer(inputLayout, 0, vertexBuffer, 0, sizeof(VertexPositionColor));
+
     auto vertexShaderSource = R"glsl(
         #version 460 core
 
@@ -231,37 +255,6 @@ int main(
     glUseProgramStages(programPipeline, GL_VERTEX_SHADER_BIT, vertexShader);
     glUseProgramStages(programPipeline, GL_FRAGMENT_SHADER_BIT, fragmentShader);
 
-    std::array<VertexPositionColor, 3> vertices =
-    {
-        VertexPositionColor{ .Position = glm::vec3(-0.5f, +0.5f, 0.0f), .Color = glm::vec3(1.0f, 0.2f, 1.0f) },
-        VertexPositionColor{ .Position = glm::vec3(+0.0f, -0.5f, 0.0f), .Color = glm::vec3(0.2f, 1.0f, 1.0f) },
-        VertexPositionColor{ .Position = glm::vec3(+0.5f, +0.5f, 0.0f), .Color = glm::vec3(1.0f, 1.0f, 0.2f) }        
-    };
-
-    uint32_t vertexBuffer = 0;
-    glCreateBuffers(1, &vertexBuffer);
-    glNamedBufferData(vertexBuffer, vertices.size() * sizeof(VertexPositionColor), vertices.data(), GL_STATIC_DRAW);
-
-    std::array<uint32_t, 3> indices = { 0, 1, 2 };
-
-    uint32_t indexBuffer = 0;
-    glCreateBuffers(1, &indexBuffer);
-    glNamedBufferData(indexBuffer, indices.size() * sizeof(uint32_t), indices.data(), GL_STATIC_DRAW);
-
-    uint32_t inputLayout = 0;
-    glCreateVertexArrays(1, &inputLayout);
-
-    glEnableVertexArrayAttrib(inputLayout, 0);
-    glVertexArrayAttribBinding(inputLayout, 0, 0);
-    glVertexArrayAttribFormat(inputLayout, 0, 3, GL_FLOAT, GL_FALSE, offsetof(VertexPositionColor, Position));
-
-    glEnableVertexArrayAttrib(inputLayout, 1);
-    glVertexArrayAttribBinding(inputLayout, 1, 0);
-    glVertexArrayAttribFormat(inputLayout, 1, 3, GL_FLOAT, GL_FALSE, offsetof(VertexPositionColor, Color));
-
-    glVertexArrayVertexBuffer(inputLayout, 0, vertexBuffer, 0, sizeof(VertexPositionColor));
-    glVertexArrayElementBuffer(inputLayout, indexBuffer);
-
     glBindVertexArray(inputLayout);
     glBindProgramPipeline(programPipeline);
 
@@ -272,7 +265,7 @@ int main(
         glfwPollEvents();
 
         glClear(GL_COLOR_BUFFER_BIT);
-        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
 
         glfwSwapBuffers(windowHandle);
     }
@@ -281,7 +274,6 @@ int main(
     glDeleteProgram(vertexShader);
     glDeleteProgramPipelines(1, &programPipeline);
 
-    glDeleteBuffers(1, &indexBuffer);
     glDeleteBuffers(1, &vertexBuffer);
     glDeleteVertexArrays(1, &inputLayout);
 
