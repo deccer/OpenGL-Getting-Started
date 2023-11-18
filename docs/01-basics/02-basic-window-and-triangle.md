@@ -27,11 +27,11 @@ Now is probably a good time to talk about the graphics pipeline.
 
 ![Vertex Input](graphics-pipeline-01-vertex-input.png)
 
-DirectX is calling it `Input Assembly`, I also kind of like this name better for some reason. Anyway. Our models and meshes we want to render are made out of vertices. We want to render them as lines or points or triangle fans, but mostly triangles, and that is setup here in the input assembly or vertex input stage.
+DirectX is calling it `Input Assembly`, I also kind of like this name better for some reason. Anyway. Our models and meshes we want to render are made out of vertices. We may want to render them as lines, points, or triangle fans, but for now we'll do a triangle list, and that is setup here in the input assembly or vertex input stage.
 
 !!! note "I might use `Input Assembly` or `IA` instead of vertex input when I elaborate on things, out of habit, but I mean `Vertex Input`"
 
-Most of the time we want to render triangles because the `GPU` is super optimized to handle those things and it does it well. You might have seen export options in tools such as [Blender](https://blender.org) or perhaps fiddled with libraries like [Assimp](https://github.com/assimp/assimp) where options like `Triangulate Vertices` exists of some form. That's why. Artists might use "quads" or other topologies, but the graphics card likes to munch on triangles.
+You might have seen export options in tools such as [Blender](https://blender.org) or perhaps fiddled with libraries like [Assimp](https://github.com/assimp/assimp) where options like `Triangulate Vertices` exist of some form. That's why. Artists might use "quads" or other topologies, but the graphics card likes to munch on triangles.
 
 That is also a good point to introduce a construct like `Vertex` or to be more specific in our case a `VertexPositionColor` construct.
 
