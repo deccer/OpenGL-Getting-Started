@@ -282,4 +282,4 @@ Exactly, we clean up. Destroy the main window and terminate `GLFW` so that it ca
 
 And then we return to the `OS``.
 
-In the next chapter we will split that one main function up into more logical bits and start to setup a triangle.
+In the next chapter we will add all the necessary things to render a triangle.
