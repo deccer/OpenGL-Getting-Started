@@ -90,13 +90,11 @@ The input layout is created as follows:
 --8<-- "src/01-02-BasicWindowAndTriangle/Main.cpp:197:206"
 ```
 
-Per vertex attribute (we have 2 attributes, `Position` and `Color`) we declare what data type each attribute is and of how many components that data type exists.
+A vertex may have "attributes" that describe its constituent data.
 
-If you think of Position, usually 3 coordinates, x, y and z, also usually floating points - we have 3 components of type `GL_FLOAT`. Thats exactly what we describe here.
+For instance, our vertex's first attribute is "position," consisting of 3 floating point components. We specify that the 0th attribute of `inputlayout` consists of 3 floats (`GL_FLOAT`), which are not normalized (`GL_FALSE`), and then specify the offset of the `Position` data within our `VertexPositionColor` struct:
 
-Same thing for the color attribute. Red, green and blue components, so, also 3 components of type `GL_FLOAT`.
-
-You can source vertex data from one or many vertex buffers, thats what the `glVertexArrayAttribBinding` call is for. In our case we want to use one vertexbuffer for the whole vertex data. You often see a setup where each attribute is stored in their own buffer.
+`glVertexArrayAttribFormat(inputLayout, 0, 3, GL_FLOAT, GL_FALSE, offsetof(VertexPositionColor, Position));`
 
 !!! note "Elaborate"
 
@@ -233,12 +231,41 @@ Let's create that program pipeline
 --8<-- "src/01-02-BasicWindowAndTriangle/Main.cpp:258:261"
 ```
 
-### Tests and Blending
+### Output Merger ("FB")
 
 ![Tests & Blending](graphics-pipeline-08-tests-blending.png)
+
+I would like to call this stage `Output Merger`, just like Microsoft did name this stage in DirectX. It makes more sense since in this stage all relevant output is merged into the final output. This could mean output to multiple framebuffers, while alpha, blending, stencil and depth testing is happening.
 
 # Compute Pipeline
 
 Compute Pipeline
 
 ![Compute Shader](compute-pipeline-01-compute-shader.png)
+
+Compute shaders are general purpose programs which can do whatever you like, they dont specialize in rasterization like stuff does in the graphics pipeline. We might take a look at compute shaders later on.
+
+# Final Draw Call
+
+We setup our rendering pipeline, loaded shaders, initialized vertex buffers and inputlayout, what is left to do is
+tell `OpenGL` to use those things in order to render the triangle.
+
+The shaders are associated with `programPipeline` and the vertex buffer is associated with the `inputLayout`. We bind them and issue the actual draw call.
+
+```cpp
+--8<-- "src/01-02-BasicWindowAndTriangle/Main.cpp:263:276"
+```
+
+If you compile and run you should see this:
+
+![Triangle](graphics-pipeline-triangle.png)
+
+# Cleanup
+
+It goes without saying that you should clean up after yourself.
+
+We do it in the opposite direction of when we created all those things.
+
+```cpp
+--8<-- "src/01-02-BasicWindowAndTriangle/Main.cpp:278:286"
+```

@@ -260,17 +260,17 @@ int main(
     glUseProgramStages(programPipeline, GL_VERTEX_SHADER_BIT, vertexShader);
     glUseProgramStages(programPipeline, GL_FRAGMENT_SHADER_BIT, fragmentShader);
 
-    glBindVertexArray(inputLayout);
-    glBindProgramPipeline(programPipeline);
-
-    glClearColor(0.7f, 0.1f, 0.4f, 1.0f);
+    glClearColor(0.79f, 0.006f, 0.1332f, 1.0f);
 
     while (!glfwWindowShouldClose(windowHandle))
     {
         glfwPollEvents();
 
         glClear(GL_COLOR_BUFFER_BIT);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+
+        glBindVertexArray(inputLayout);
+        glBindProgramPipeline(programPipeline);
+        glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 
         glfwSwapBuffers(windowHandle);
     }

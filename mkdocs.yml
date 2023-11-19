@@ -7,7 +7,7 @@ site_description: OpenGL Getting Started
 copyright: Copyright 2023 deccer
 theme:
   name: material
-  logo: https://cdn-icons-png.flaticon.com/512/1864/1864530.png
+  logo: https://cdn-icons-png.flaticon.com/512/1949/1949895.png
   font:
     text: Roboto
     code: Roboto Mono
@@ -82,6 +82,16 @@ nav:
   - Basics:
       - Basic Window: 01-basics/01-basic-window.md
       - Basic Window With Triangle: 01-basics/02-basic-window-and-triangle.md
+  - Debugging:
+      - Debugging: 02-debugging/01-debugging.md
+      - Debug Callback:    
+          - Debug Callback: 02-debugging/02-debug-callback.md
+          - Debug Callback Exercises:      
+            - Exercise 1: 02-debugging/02-debug-callback/01-exercise.md
+            - Exercise 2: 02-debugging/02-debug-callback/02-exercise.md
+          - RenderDoc: 02-debugging/03-renderdoc.md
+          - Exercises: 02-debugging/04-renderdoc-exercises.md
+          - Nsight Graphics: 02-debugging/05-nsight-graphics.md
   #- Basic Application: 00-setup/01-basic-application.md
   #- Basic Triangle:
   #    - Basic Triangle: 10-basic-triangle/10-basic-triangle.md
