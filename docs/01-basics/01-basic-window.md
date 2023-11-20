@@ -212,7 +212,7 @@ Resizing and keyboard input.
 
 To be able to get a feedback when a window has been resized or key pressed/released we need to hook up 2 callbacks using the following calls.
 
-Resize first. Windows consist of roughly 2 major things. A non client area and the client area. The former is everything like border which can be 1-n pixels thick, and the title bar which has a caption, the usual buttons to minimize, maximize and close a window and the system menu. The latter is usually the part wrapped by the non client area. The non client area is the space we have available to draw our stuff to/on. Now when a window gets resized, the non client area is resized as well, automatically.
+Resize first. Windows consist of roughly 2 major things. A non client area and the client area. The former is everything like border which can be 1-n pixels thick, and the title bar which has a caption, the usual buttons to minimize, maximize and close a window and the system menu. The latter is usually the part wrapped by the non client area. The client area is the space we have available to draw our stuff to/on. Now when a window gets resized, the client area is resized as well, automatically.
 
 Perhaps a ugly picture helps.
 
