@@ -267,7 +267,7 @@ Next block, we are also almost finished, is the so called game loop, a simple lo
 `GLFW` created a double buffered window for us, and the `glfwSwapBuffers` swaps those buffers whenever they are ready to be swapped.
 
 ```cmake title="src/01-01-BasicWindow/Main.cpp"
---8<-- "src/01-01-BasicWindow/Main.cpp:77:83"
+--8<-- "src/01-01-BasicWindow/Main.cpp:85:90"
 ```
 
 That game loop is the place where most of the magic happens. You update your game objects, read key from the keyboard and mouse, queue sounds to be played, receive network packets perhaps, and most importantly render your virtual world.
