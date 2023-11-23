@@ -278,7 +278,8 @@ That game loop is the place where most of the magic happens. You update your gam
 
 What happens after we exit that game loop?
 
-Exactly, we clean up. Destroy the main window and terminate `GLFW` so that it can clean up its internal state.
+Not much, as there usually nothing else after the program ends, we clean up.
+Destroy the main window and terminate `GLFW` so that it can clean up its internal state.
 
 And then we return to the `OS``.
 
