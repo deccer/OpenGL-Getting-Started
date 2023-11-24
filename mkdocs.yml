@@ -87,10 +87,12 @@ nav:
       - Debug Callback:    
           - Debug Callback: 02-debugging/02-debug-callback.md
           - Debug Callback Exercises:      
-            - Exercise 1: 02-debugging/02-debug-callback/01-exercise.md
-            - Exercise 2: 02-debugging/02-debug-callback/02-exercise.md
+            - Exercise 1: 02-debugging/02-debug-callback-exercise-01.md
+            - Exercise 2: 02-debugging/02-debug-callback-exercise-02.md
           - RenderDoc: 02-debugging/03-renderdoc.md
-          - Exercises: 02-debugging/04-renderdoc-exercises.md
+          - RenderDoc Exercises: 
+            - Exercise 1: 02-debugging/04-renderdoc-exercise-01.md
+            - Exercise 2: 02-debugging/04-renderdoc-exercise-02.md
           - Nsight Graphics: 02-debugging/05-nsight-graphics.md
   #- Basic Application: 00-setup/01-basic-application.md
   #- Basic Triangle:

@@ -4,6 +4,8 @@ Let's hook it up.
 
 A free floating function above `main`.
 
+!!! note "Explain the following blob a bit more"
+
 ```cpp
 --8<-- "src/01-02-BasicWindowAndTriangle/Main.cpp:40:99"
 ```

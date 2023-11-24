@@ -18,17 +18,17 @@ You get this output in the output window... something something invalid value...
 
 Let's check the callstack. Im using Visual Studio Code here.
 
-![](debug-callback-01-callstack.png)
+![](02-debug-callback-01-callstack.png)
 
 Our program is quite simple at the moment so there is not much to see. But we do see the debugcallback at the top, them entry which goes into the graphics driver, and below the caller issuing the last gl command. Which in this case...
 
-![](debug-callback-02-callstack.png)
+![](02-debug-callback-02-callstack.png)
 
 ... sits in the main function at line 269.
 
 We get the offending call there. `glClear(0xFFF)`
 
-![](debug-callback-03-callstack.png)
+![](02-debug-callback-03-callstack.png)
 
 What did the error message say again? `GL_INVALID_VALUE`.
 
