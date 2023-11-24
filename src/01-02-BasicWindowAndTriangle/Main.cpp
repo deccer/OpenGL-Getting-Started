@@ -105,7 +105,7 @@ int main(
     if (glfwInit() == GLFW_FALSE)
     {
         spdlog::error("Glfw: Unable to initialize");
-        return false;
+        return 1;
     }
 
     glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
@@ -135,7 +135,7 @@ int main(
         {
             spdlog::error("GLFW: Unable to create window Details_{}", errorDescription);
         }
-        return 0;
+        return 1;
     }
 
     int32_t monitorLeft = 0;
@@ -243,7 +243,7 @@ int main(
     if (!vertexShaderResult.has_value())
     {
         spdlog::error("OpenGL: Failed to compile vertex shader: {}", vertexShaderResult.error());
-        return 0;
+        return 1;
     }
     uint32_t vertexShader = vertexShaderResult.value();
 
@@ -251,7 +251,7 @@ int main(
     if (!fragmentShaderResult.has_value())
     {
         spdlog::error("OpenGL: Failed to compile fragment shader: {}", fragmentShaderResult.error());
-        return false;
+        return 1;
     }
     uint32_t fragmentShader = fragmentShaderResult.value();
 
