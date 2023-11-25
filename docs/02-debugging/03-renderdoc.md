@@ -10,5 +10,5 @@ You should get it right away from [here](https://renderdoc.org) and install it.
 
 It comes with a useful [Getting Started](https://renderdoc.org/docs/getting_started/index.html) guide which you SHOULD read.
 
-Please read, takes only a few minutes but explains the basics of `RenderDoc`.
+Please read it, it takes only a few minutes but explains the basics of what `RenderDoc` is and how it's used.
 

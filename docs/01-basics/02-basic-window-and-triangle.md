@@ -29,7 +29,7 @@ Now is probably a good time to talk about the
 
 ![Vertex Input](graphics-pipeline-01-vertex-input.png)
 
-DirectX is calling it `Input Assembly`, I also kind of like this name better for some reason. Anyway. Our models and meshes we want to render are made out of vertices. We may want to render them as lines, points, or triangle fans, but for now we'll do a triangle list, and that is setup here in the input assembly or vertex input stage.
+DirectX is calling it `Input Assembly`, I also kind of like this name better for some reason (RenderDoc which I explain later also calls it `Input Assembly`). Anyway. Our models and meshes we want to render are made out of vertices. We may want to render them as lines, points, or triangle fans, but for now we'll do a triangle list, and that is setup here in the input assembly or vertex input stage.
 
 !!! note "I might use `Input Assembly` or `IA` instead of vertex input when I elaborate on things, out of habit, but I mean `Vertex Input`"
 
