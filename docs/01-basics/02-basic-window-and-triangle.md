@@ -166,7 +166,13 @@ What does it do? It creates an `OpenGL` object to represent a program, we will p
 If there was problem it will be returned as error message and if everything was alright we will
 get back the program itself.
 
-Here is how we use it to create the vertex shader we need
+The vertex shader itself:
+
+```cpp
+--8<-- "src/01-02-BasicWindowAndTriangle/Main.cpp:211:228"
+```
+
+And here is how we create a program out of it.
 
 ```cpp
 --8<-- "src/01-02-BasicWindowAndTriangle/Main.cpp:242:248"
@@ -216,6 +222,14 @@ We did setup those things too here
 The fragment shader takes the fragments from the rasterizer stage and "colors" them in this stage. That's what most of the time is happening here anyway.
 
 The fragment shader is also an object we create, similar to the vertex shader
+
+The fragment shader itself
+
+```cpp
+--8<-- "src/01-02-BasicWindowAndTriangle/Main.cpp:230:240"
+```
+
+And we also create a program out of it like so
 
 ```cpp
 --8<-- "src/01-02-BasicWindowAndTriangle/Main.cpp:250:256"
