@@ -249,7 +249,7 @@ Let's create that program pipeline
 
 ![Tests & Blending](graphics-pipeline-08-tests-blending.png)
 
-I would like to call this stage `Output Merger`, just like Microsoft did name this stage in DirectX. It makes more sense since in this stage all relevant output is merged into the final output. This could mean output to multiple framebuffers, while alpha, blending, stencil and depth testing is happening.
+I would like to call this stage `Output Merger`, just like Microsoft did name this stage in DirectX. It makes more sense since in this stage all relevant output is merged into the final output. This could mean output to single or multiple framebuffers, while alpha, blending, stencil and depth testing is happening.
 
 # Compute Pipeline
 

@@ -92,7 +92,6 @@ nav:
           - RenderDoc: 02-debugging/03-renderdoc.md
           - RenderDoc Exercises: 
             - Exercise 1: 02-debugging/04-renderdoc-exercise-01.md
-            - Exercise 2: 02-debugging/04-renderdoc-exercise-02.md
           - Nsight Graphics: 02-debugging/05-nsight-graphics.md
   #- Basic Application: 00-setup/01-basic-application.md
   #- Basic Triangle:
