@@ -1,0 +1,2101 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="OpenGL Getting Started">
+      
+      
+        <meta name="author" content="deccer">
+      
+      
+        <link rel="canonical" href="https://deccer.github.io/opengl-getting-started/99910-basic-triangle/01-basic-application/">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.14">
+    
+    
+      
+        <title>Basic Application - OpenGL - Getting Started</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.fad675c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+  
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M64 32C28.7 32 0 60.7 0 96v320c0 35.3 28.7 64 64 64h224V368c0-26.5 21.5-48 48-48h112V96c0-35.3-28.7-64-64-64H64zm384 320H336c-8.8 0-16 7.2-16 16v112l32-32 64-64 32-32z"/></svg>');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M96 0C43 0 0 43 0 96v320c0 53 43 96 96 96h320c17.7 0 32-14.3 32-32s-14.3-32-32-32v-64c17.7 0 32-14.3 32-32V32c0-17.7-14.3-32-32-32H96zm0 384h256v64H96c-17.7 0-32-14.3-32-32s14.3-32 32-32zm32-240c0-8.8 7.2-16 16-16h192c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16zm16 48h192c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/></svg>');--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zm-40-176h24v-64h-24c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24h-80c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M480 32c0-12.9-7.8-24.6-19.8-29.6S434.5.2 425.3 9.3L381.7 53c-48 48-113.1 75-181 75H64c-35.3 0-64 28.7-64 64v96c0 35.3 28.7 64 64 64v128c0 17.7 14.3 32 32 32h64c17.7 0 32-14.3 32-32V352h8.7c67.9 0 133 27 181 75l43.6 43.6c9.2 9.2 22.9 11.9 34.9 6.9s19.8-16.6 19.8-29.6V300.4c18.6-8.8 32-32.5 32-60.4s-13.4-51.6-32-60.4V32zm-64 76.7v262.6C357.2 317.8 280.5 288 200.7 288H192v-96h8.7c79.8 0 156.5-29.8 215.3-83.3z"/></svg>');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7l233.4-233.3c12.5-12.5 32.8-12.5 45.3 0z"/></svg>');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M256 512a256 256 0 1 0 0-512 256 256 0 1 0 0 512zm-86.2-346.7c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1 0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6-13.3 0-24-10.7-24-24v-13.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1 0-8.4-6.8-15.1-15.1-15.1h-58.3c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1-64 0z"/></svg>');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7.2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8.2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24v112c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0-64 0 32 32 0 1 0 64 0z"/></svg>');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M459.1 52.4 442.6 6.5c-1.9-3.9-6.1-6.5-10.5-6.5s-8.5 2.6-10.4 6.5l-16.5 45.9-46 16.8c-4.3 1.6-7.3 5.9-7.2 10.4 0 4.5 3 8.7 7.2 10.2l45.7 16.8 16.8 45.8c1.5 4.4 5.8 7.5 10.4 7.5s8.9-3.1 10.4-7.5l16.5-45.8 45.7-16.8c4.2-1.5 7.2-5.7 7.2-10.2 0-4.6-3-8.9-7.2-10.4l-45.6-16.8zm-132.4 53c-12.5-12.5-32.8-12.5-45.3 0l-2.9 2.9c-22-8-45.8-12.3-70.5-12.3C93.1 96 0 189.1 0 304s93.1 208 208 208 208-93.1 208-208c0-24.7-4.3-48.5-12.2-70.5l2.9-2.9c12.5-12.5 12.5-32.8 0-45.3l-80-80zM200 192c-57.4 0-104 46.6-104 104v8c0 8.8-7.2 16-16 16s-16-7.2-16-16v-8c0-75.1 60.9-136 136-136h8c8.8 0 16 7.2 16 16s-7.2 16-16 16h-8z"/></svg>');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M416 398.9c58.5-41.1 96-104.1 96-174.9C512 100.3 397.4 0 256 0S0 100.3 0 224c0 70.7 37.5 133.8 96 174.9V464c0 26.5 21.5 48 48 48h48v-48c0-8.8 7.2-16 16-16s16 7.2 16 16v48h64v-48c0-8.8 7.2-16 16-16s16 7.2 16 16v48h48c26.5 0 48-21.5 48-48v-65.1zM96 256a64 64 0 1 1 128 0 64 64 0 1 1-128 0zm256-64a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M320 0c17.7 0 32 14.3 32 32v64h120c39.8 0 72 32.2 72 72v272c0 39.8-32.2 72-72 72H168c-39.8 0-72-32.2-72-72V168c0-39.8 32.2-72 72-72h120V32c0-17.7 14.3-32 32-32zM208 384c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16h-32zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16h-32zm96 0c-8.8 0-16 7.2-16 16s7.2 16 16 16h32c8.8 0 16-7.2 16-16s-7.2-16-16-16h-32zM264 256a40 40 0 1 0-80 0 40 40 0 1 0 80 0zm152 40a40 40 0 1 0 0-80 40 40 0 1 0 0 80zM48 224h16v192H48c-26.5 0-48-21.5-48-48v-96c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48v96c0 26.5-21.5 48-48 48h-16V224h16z"/></svg>');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M288 0H128c-17.7 0-32 14.3-32 32s14.3 32 32 32v132.8c0 11.8-3.3 23.5-9.5 33.5L10.3 406.2C3.6 417.2 0 429.7 0 442.6 0 480.9 31.1 512 69.4 512h309.2c38.3 0 69.4-31.1 69.4-69.4 0-12.8-3.6-25.4-10.3-36.4L329.5 230.4c-6.2-10.1-9.5-21.7-9.5-33.5V64c17.7 0 32-14.3 32-32S337.7 0 320 0h-32zm-96 196.8V64h64v132.8c0 23.7 6.6 46.9 19 67.1l34.5 56.1h-171l34.5-56.1c12.4-20.2 19-43.4 19-67.1z"/></svg>');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M0 216C0 149.7 53.7 96 120 96h8c17.7 0 32 14.3 32 32s-14.3 32-32 32h-8c-30.9 0-56 25.1-56 56v8h64c35.3 0 64 28.7 64 64v64c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V216zm256 0c0-66.3 53.7-120 120-120h8c17.7 0 32 14.3 32 32s-14.3 32-32 32h-8c-30.9 0-56 25.1-56 56v8h64c35.3 0 64 28.7 64 64v64c0 35.3-28.7 64-64 64h-64c-35.3 0-64-28.7-64-64V216z"/></svg>');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-2FDD1M3R22"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-2FDD1M3R22",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-2FDD1M3R22",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="pink" data-md-color-accent="yellow">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#basic-application" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="OpenGL - Getting Started" class="md-header__button md-logo" aria-label="OpenGL - Getting Started" data-md-component="logo">
+      
+  <img src="https://cdn-icons-png.flaticon.com/512/1949/1949895.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OpenGL - Getting Started
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Basic Application
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/deccer/opengl-getting-started" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    deccer/opengl-getting-started
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="OpenGL - Getting Started" class="md-nav__button md-logo" aria-label="OpenGL - Getting Started" data-md-component="logo">
+      
+  <img src="https://cdn-icons-png.flaticon.com/512/1949/1949895.png" alt="logo">
+
+    </a>
+    OpenGL - Getting Started
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/deccer/opengl-getting-started" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    deccer/opengl-getting-started
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Setup
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Setup
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-setup/00-setup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Basics
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Basics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-basics/01-basic-window/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Basic Window
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-basics/02-basic-window-and-triangle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Basic Window With Triangle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Debugging
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Debugging
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-debugging/01-debugging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debugging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Debug Callback
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            Debug Callback
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-debugging/02-debug-callback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debug Callback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2_2" id="__nav_4_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Debug Callback Exercises
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Debug Callback Exercises
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-debugging/02-debug-callback-exercise-01/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exercise 1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-debugging/02-debug-callback-exercise-02/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exercise 2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-debugging/03-renderdoc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RenderDoc
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2_4" id="__nav_4_2_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    RenderDoc Exercises
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            RenderDoc Exercises
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-debugging/04-renderdoc-exercise-01/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exercise 1
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-debugging/05-nsight-graphics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Nsight Graphics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#initial-cmake-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Initial CMake setup
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hellowindowapplication" class="md-nav__link">
+    <span class="md-ellipsis">
+      HelloWindowApplication
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="basic-application">Basic Application<a class="headerlink" href="#basic-application" title="Permanent link">&para;</a></h1>
+<h3 id="initial-cmake-setup">Initial CMake setup<a class="headerlink" href="#initial-cmake-setup" title="Permanent link">&para;</a></h3>
+<p>If you want to follow from scratch, let me explain how I did it.</p>
+<p>You pick a folder somewhere on your drives. Let's call the folder <code>~/Projects/OpenGLGettingStarted</code> (on Linux) or <code>C:\Users\YourUserName\Documents\Projects\OpenGLGettingStarted</code> (on Windows).</p>
+<p>Create a folder/file structure like this. Leave Application.{hpp/cpp} empty for now, I will explain in a minute what we do there.
+<div class="highlight"><pre><span></span><code>OpenGLGettingStarted
+├── lib
+│   └── CMakeLists.txt
+├── src
+│   ├── Shared
+│   │   ├── Application.cpp
+│   │   ├── Application.hpp
+│   │   └── CMakeLists.txt
+└── CMakeLists.txt
+</code></pre></div></p>
+<p>So, <code>OpenGLGettingStarted/CMakeLists.txt</code> is our main project file - you could compare it to <code>Visual Studio</code>s solution file, if you worked with <code>VS</code> before. This one should look like this</p>
+<div class="highlight"><span class="filename">OpenGLGettingStarted/CMakeLists.txt</span><pre><span></span><code><span class="nb">project</span><span class="p">(</span><span class="s">OpenGLGettingStarted</span><span class="p">)</span>
+
+<span class="nb">set</span><span class="p">(</span><span class="s">CMAKE_CXX_STANDARD</span><span class="w"> </span><span class="s">23</span><span class="p">)</span>
+
+<span class="nb">add_subdirectory</span><span class="p">(</span><span class="s">lib</span><span class="p">)</span>
+<span class="nb">add_subdirectory</span><span class="p">(</span><span class="s">src/01-01-BasicWindow</span><span class="p">)</span>
+</code></pre></div>
+<p>Then we will need <code>OpenGLGettingStarted/lib/CMakeLists.txt</code> which has a bit more content since we need to load a bunch of dependencies, as mentioned above, <code>GLFW</code>, <code>GLAD</code> and so forth</p>
+<div class="highlight"><span class="filename">OpenGLGettingStarted/lib/CMakeLists.txt</span><pre><span></span><code><span class="c"># Dependencies</span>
+
+<span class="nb">include</span><span class="p">(</span><span class="s">FetchContent</span><span class="p">)</span>
+
+<span class="nb">find_package</span><span class="p">(</span><span class="s">OpenGL</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+
+<span class="c">#- GLFW ---------------------------------------------------------------------</span>
+
+<span class="nb">FetchContent_Declare</span><span class="p">(</span>
+<span class="w">    </span><span class="s">glfw</span>
+<span class="w">    </span><span class="s">GIT_REPOSITORY</span><span class="w"> </span><span class="s">https://github.com/glfw/glfw</span>
+<span class="w">    </span><span class="s">GIT_TAG</span><span class="w">        </span><span class="s">3.3.8</span>
+<span class="w">    </span><span class="s">GIT_SHALLOW</span><span class="w">    </span><span class="s">TRUE</span>
+<span class="w">    </span><span class="s">GIT_PROGRESS</span><span class="w">   </span><span class="s">TRUE</span>
+<span class="p">)</span>
+<span class="nb">message</span><span class="p">(</span><span class="s2">&quot;Fetching glfw&quot;</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">GLFW_BUILD_TESTS</span><span class="w"> </span><span class="s">OFF</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">BOOL</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">GLFW_BUILD_DOCS</span><span class="w"> </span><span class="s">OFF</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">BOOL</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">GLFW_INSTALL</span><span class="w"> </span><span class="s">OFF</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">BOOL</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">GLFW_BUILD_EXAMPLES</span><span class="w"> </span><span class="s">OFF</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">BOOL</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="nb">FetchContent_MakeAvailable</span><span class="p">(</span><span class="s">glfw</span><span class="p">)</span>
+
+<span class="c">#- GLAD ---------------------------------------------------------------------</span>
+
+<span class="nb">FetchContent_Declare</span><span class="p">(</span>
+<span class="w">    </span><span class="s">glad</span>
+<span class="w">    </span><span class="s">GIT_REPOSITORY</span><span class="w"> </span><span class="s">https://github.com/Dav1dde/glad.git</span>
+<span class="w">    </span><span class="s">GIT_SHALLOW</span><span class="w">    </span><span class="s">TRUE</span>
+<span class="w">    </span><span class="s">GIT_PROGRESS</span><span class="w">   </span><span class="s">TRUE</span>
+<span class="p">)</span>
+
+<span class="nb">FetchContent_GetProperties</span><span class="p">(</span><span class="s">glad</span><span class="p">)</span>
+<span class="nb">if</span><span class="p">(</span><span class="s">NOT</span><span class="w"> </span><span class="s">glad_POPULATED</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">message</span><span class="p">(</span><span class="s2">&quot;Fetching glad&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">FetchContent_Populate</span><span class="p">(</span><span class="s">glad</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">set</span><span class="p">(</span><span class="s">GLAD_PROFILE</span><span class="w"> </span><span class="s2">&quot;core&quot;</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">STRING</span><span class="w"> </span><span class="s2">&quot;OpenGL profile&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">set</span><span class="p">(</span><span class="s">GLAD_API</span><span class="w"> </span><span class="s2">&quot;gl=4.6&quot;</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">STRING</span><span class="w"> </span><span class="s2">&quot;API type/version pairs, like \&quot;</span><span class="s">gl=4.6\</span><span class="s2">&quot;, no version means latest&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">set</span><span class="p">(</span><span class="s">GLAD_GENERATOR</span><span class="w"> </span><span class="s2">&quot;c&quot;</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">STRING</span><span class="w"> </span><span class="s2">&quot;Language to generate the binding for&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">set</span><span class="p">(</span><span class="s">GLAD_EXTENSIONS</span><span class="w"> </span><span class="s2">&quot;GL_ARB_bindless_texture&quot;</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">STRING</span><span class="w"> </span><span class="s2">&quot;Extensions to take into consideration when generating the bindings&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">add_subdirectory</span><span class="p">(</span><span class="o">${</span><span class="nv">glad_SOURCE_DIR</span><span class="o">}</span><span class="w"> </span><span class="o">${</span><span class="nv">glad_BINARY_DIR</span><span class="o">}</span><span class="p">)</span>
+<span class="nb">endif</span><span class="p">()</span>
+
+<span class="c">#- SPDLOG ---------------------------------------------------------------------</span>
+
+<span class="nb">FetchContent_Declare</span><span class="p">(</span>
+<span class="w">    </span><span class="s">spdlog</span>
+<span class="w">    </span><span class="s">GIT_REPOSITORY</span><span class="w"> </span><span class="s">https://github.com/gabime/spdlog.git</span>
+<span class="w">    </span><span class="s">GIT_TAG</span><span class="w">        </span><span class="s">v1.10.0</span>
+<span class="w">    </span><span class="s">GIT_SHALLOW</span><span class="w">    </span><span class="s">TRUE</span>
+<span class="w">    </span><span class="s">GIT_PROGRESS</span><span class="w">   </span><span class="s">TRUE</span>
+<span class="p">)</span>
+
+<span class="nb">message</span><span class="p">(</span><span class="s2">&quot;Fetching spdlog&quot;</span><span class="p">)</span>
+<span class="nb">FetchContent_MakeAvailable</span><span class="p">(</span><span class="s">spdlog</span><span class="p">)</span>
+
+<span class="c">#- GLM ---------------------------------------------------------------------</span>
+
+<span class="nb">FetchContent_Declare</span><span class="p">(</span>
+<span class="w">    </span><span class="s">glm</span>
+<span class="w">    </span><span class="s">GIT_REPOSITORY</span><span class="w"> </span><span class="s">https://github.com/g-truc/glm</span>
+<span class="w">    </span><span class="s">GIT_TAG</span><span class="w">        </span><span class="s">master</span>
+<span class="w">    </span><span class="s">GIT_SHALLOW</span><span class="w">    </span><span class="s">TRUE</span>
+<span class="w">    </span><span class="s">GIT_PROGRESS</span><span class="w">   </span><span class="s">TRUE</span>
+<span class="p">)</span>
+
+<span class="nb">message</span><span class="p">(</span><span class="s2">&quot;Fetching glm&quot;</span><span class="p">)</span>
+<span class="nb">FetchContent_MakeAvailable</span><span class="p">(</span><span class="s">glm</span><span class="p">)</span>
+<span class="nb">target_compile_definitions</span><span class="p">(</span><span class="s">glm</span><span class="w"> </span><span class="s">INTERFACE</span><span class="w"> </span><span class="s">GLM_FORCE_SILENT_WARNINGS</span><span class="p">)</span>
+
+<span class="c">#- DEAR IMGUI---------------------------------------------------------------------</span>
+
+<span class="nb">FetchContent_Declare</span><span class="p">(</span>
+<span class="w">    </span><span class="s">imgui</span>
+<span class="w">    </span><span class="s">GIT_REPOSITORY</span><span class="w"> </span><span class="s">https://github.com/ocornut/imgui</span>
+<span class="w">    </span><span class="s">GIT_TAG</span><span class="w">        </span><span class="s">v1.88</span>
+<span class="w">    </span><span class="s">GIT_SHALLOW</span><span class="w">    </span><span class="s">TRUE</span>
+<span class="w">    </span><span class="s">GIT_PROGRESS</span><span class="w">   </span><span class="s">TRUE</span>
+<span class="p">)</span>
+
+<span class="nb">FetchContent_GetProperties</span><span class="p">(</span><span class="s">imgui</span><span class="p">)</span>
+<span class="nb">if</span><span class="p">(</span><span class="s">NOT</span><span class="w"> </span><span class="s">imgui_POPULATED</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">message</span><span class="p">(</span><span class="s2">&quot;Fetching imgui&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">FetchContent_Populate</span><span class="p">(</span><span class="s">imgui</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nb">add_library</span><span class="p">(</span><span class="s">imgui</span>
+<span class="w">        </span><span class="o">${</span><span class="nv">imgui_SOURCE_DIR</span><span class="o">}</span><span class="s">/imgui.cpp</span>
+<span class="w">        </span><span class="o">${</span><span class="nv">imgui_SOURCE_DIR</span><span class="o">}</span><span class="s">/imgui_demo.cpp</span>
+<span class="w">        </span><span class="o">${</span><span class="nv">imgui_SOURCE_DIR</span><span class="o">}</span><span class="s">/imgui_draw.cpp</span>
+<span class="w">        </span><span class="o">${</span><span class="nv">imgui_SOURCE_DIR</span><span class="o">}</span><span class="s">/imgui_widgets.cpp</span>
+<span class="w">        </span><span class="o">${</span><span class="nv">imgui_SOURCE_DIR</span><span class="o">}</span><span class="s">/imgui_tables.cpp</span>
+<span class="w">        </span><span class="o">${</span><span class="nv">imgui_SOURCE_DIR</span><span class="o">}</span><span class="s">/backends/imgui_impl_opengl3.cpp</span>
+<span class="w">        </span><span class="o">${</span><span class="nv">imgui_SOURCE_DIR</span><span class="o">}</span><span class="s">/backends/imgui_impl_glfw.cpp</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nb">target_include_directories</span><span class="p">(</span><span class="s">imgui</span><span class="w"> </span><span class="s">PUBLIC</span>
+<span class="w">        </span><span class="o">${</span><span class="nv">imgui_SOURCE_DIR</span><span class="o">}</span>
+<span class="w">        </span><span class="o">${</span><span class="nv">imgui_SOURCE_DIR</span><span class="o">}</span><span class="s">/backends</span>
+<span class="w">        </span><span class="o">${</span><span class="nv">glfw_SOURCE_DIR</span><span class="o">}</span><span class="s">/include</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">imgui</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">glfw</span><span class="p">)</span>
+<span class="nb">endif</span><span class="w"> </span><span class="p">()</span>
+
+<span class="c">#- TRACY ---------------------------------------------------------------------</span>
+
+<span class="nb">FetchContent_Declare</span><span class="p">(</span>
+<span class="w">    </span><span class="s">tracy</span>
+<span class="w">    </span><span class="s">GIT_REPOSITORY</span><span class="w">  </span><span class="s">https://github.com/wolfpld/tracy.git</span>
+<span class="w">    </span><span class="s">GIT_TAG</span><span class="w">         </span><span class="s">master</span>
+<span class="w">    </span><span class="s">GIT_SHALLOW</span><span class="w">     </span><span class="s">TRUE</span>
+<span class="w">    </span><span class="s">GIT_PROGRESS</span><span class="w">    </span><span class="s">TRUE</span>
+<span class="p">)</span>
+
+<span class="nb">message</span><span class="p">(</span><span class="s2">&quot;Fetching tracy&quot;</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">TRACY_ENABLE</span><span class="w"> </span><span class="s">ON</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">BOOL</span><span class="w"> </span><span class="s2">&quot;Enable profiling&quot;</span><span class="p">)</span>
+<span class="c">#set(TRACY_NO_SYSTEM_TRACING ON CACHE BOOL &quot;Disable System Tracing&quot;)</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">TRACY_ONLY_IPV4</span><span class="w"> </span><span class="s">ON</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">BOOL</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="s">FORCE</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">TRACY_ONLY_LOCALHOST</span><span class="w"> </span><span class="s">ON</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">BOOL</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="s">FORCE</span><span class="p">)</span>
+<span class="nb">set</span><span class="p">(</span><span class="s">TRACY_NO_FRAME_IMAGE</span><span class="w"> </span><span class="s">ON</span><span class="w"> </span><span class="s">CACHE</span><span class="w"> </span><span class="s">BOOL</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="s">FORCE</span><span class="p">)</span>
+<span class="nb">FetchContent_MakeAvailable</span><span class="p">(</span><span class="s">tracy</span><span class="p">)</span>
+
+<span class="c">#- DEBUGBREAK ---------------------------------------------------------------------</span>
+
+<span class="nb">FetchContent_Declare</span><span class="p">(</span>
+<span class="w">    </span><span class="s">debugbreak</span>
+<span class="w">    </span><span class="s">GIT_REPOSITORY</span><span class="w"> </span><span class="s">https://github.com/scottt/debugbreak</span>
+<span class="w">    </span><span class="s">GIT_SHALLOW</span><span class="w">    </span><span class="s">TRUE</span>
+<span class="w">    </span><span class="s">GIT_PROGRESS</span><span class="w">   </span><span class="s">TRUE</span>
+<span class="p">)</span>
+
+<span class="nb">FetchContent_GetProperties</span><span class="p">(</span><span class="s">debugbreak</span><span class="p">)</span>
+<span class="nb">if</span><span class="p">(</span><span class="s">NOT</span><span class="w"> </span><span class="s">debugbreak_POPULATED</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">message</span><span class="p">(</span><span class="s2">&quot;Fetching debugbreak&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">FetchContent_Populate</span><span class="p">(</span><span class="s">debugbreak</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nb">add_library</span><span class="p">(</span><span class="s">debugbreak</span><span class="w"> </span><span class="s">INTERFACE</span><span class="w"> </span><span class="o">${</span><span class="nv">debugbreak_SOURCE_DIR</span><span class="o">}</span><span class="s">/debugbreak.h</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">target_include_directories</span><span class="p">(</span><span class="s">debugbreak</span><span class="w"> </span><span class="s">INTERFACE</span><span class="w"> </span><span class="o">${</span><span class="nv">debugbreak_SOURCE_DIR</span><span class="o">}</span><span class="p">)</span>
+<span class="nb">endif</span><span class="p">()</span>
+
+<span class="c">#- STB ---------------------------------------------------------------------</span>
+
+<span class="nb">FetchContent_Declare</span><span class="p">(</span>
+<span class="w">    </span><span class="s">stb_image</span>
+<span class="w">    </span><span class="s">GIT_REPOSITORY</span><span class="w">  </span><span class="s">https://github.com/nothings/stb.git</span>
+<span class="w">    </span><span class="s">GIT_TAG</span><span class="w">         </span><span class="s">master</span>
+<span class="w">    </span><span class="s">GIT_SHALLOW</span><span class="w">     </span><span class="s">TRUE</span>
+<span class="w">    </span><span class="s">GIT_PROGRESS</span><span class="w">    </span><span class="s">TRUE</span>
+<span class="p">)</span>
+<span class="nb">FetchContent_GetProperties</span><span class="p">(</span><span class="s">stb_image</span><span class="p">)</span>
+<span class="nb">if</span><span class="p">(</span><span class="s">NOT</span><span class="w"> </span><span class="s">stb_image_POPULATED</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">FetchContent_Populate</span><span class="p">(</span><span class="s">stb_image</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">message</span><span class="p">(</span><span class="s2">&quot;Fetching stb_image&quot;</span><span class="p">)</span>
+
+<span class="w">    </span><span class="nb">add_library</span><span class="p">(</span><span class="s">stb_image</span><span class="w"> </span><span class="s">INTERFACE</span><span class="w"> </span><span class="o">${</span><span class="nv">stb_image_SOURCE_DIR</span><span class="o">}</span><span class="s">/stb_image.h</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">target_include_directories</span><span class="p">(</span><span class="s">stb_image</span><span class="w"> </span><span class="s">INTERFACE</span><span class="w"> </span><span class="o">${</span><span class="nv">stb_image_SOURCE_DIR</span><span class="o">}</span><span class="p">)</span>
+<span class="nb">endif</span><span class="p">()</span>
+</code></pre></div>
+<p>FetchContent will clone the repos according to what was specified and some options are set for one or another library, like Tracy to enable tracing, or for glad to provide bindings for OpenGL 4.6</p>
+<p>As mentioned earlier I would like to use a base class <code>Application</code> which handles input and windowing things, as well as provides a ready to use opengl context for us to use.</p>
+<p>That means we create a <code>src</code> folder and within a <code>Shared</code> folder where we will create those two files <code>Application.hpp</code> and <code>Application.cpp</code></p>
+<p><code>Shared</code> is turned into a target which we can link with all future applications to provide Application-functionality to all of them, for that we need yet another <code>CMakeLists.txt</code>.
+Which will look like that</p>
+<div class="highlight"><span class="filename">OpenGLGettingStarted/src/Shared/CMakeLists.txt</span><pre><span></span><code><span class="nb">add_library</span><span class="p">(</span><span class="s">Shared</span>
+<span class="w">    </span><span class="s">Application.cpp</span>
+<span class="p">)</span>
+
+<span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">Shared</span><span class="w"> </span><span class="s">PRIVATE</span><span class="w"> </span><span class="s">glfw</span><span class="w"> </span><span class="s">glad</span><span class="w"> </span><span class="s">spdlog</span><span class="w"> </span><span class="s">debugbreak</span><span class="p">)</span>
+</code></pre></div>
+<p>As you can see it creates a library, and needs <code>Application.cpp</code> and it depends on glfw, glad, spdlog and debugbreak.
+If we have, for some reason, more things we would like to share across all other applications/examples later on, perhaps some Input class of some sort, then it would go in there too
+as <code>Input.cpp</code> to be compiled into the shared library.</p>
+<p>That applies to the other <code>CMakeLists.txt</code> too by the way. When we add new .cpp files to the project they should be added to the target. <code>Visual Studio</code> and <code>Clion</code> (since they support CMake out of the box) might add .cpp files automatically for you.</p>
+<p>Ok then two things are missing. Bear with me its a little bit of code incoming :)</p>
+<div class="highlight"><span class="filename">OpenGLGettingStarted/src/Shared/Application.hpp</span><pre><span></span><code><span class="cp">#pragma once</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cstdint&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string_view&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;expected&gt;</span>
+
+<span class="k">struct</span><span class="w"> </span><span class="nc">GLFWwindow</span><span class="p">;</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Application</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="o">~</span><span class="n">Application</span><span class="p">();</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">Run</span><span class="p">();</span>
+
+<span class="k">protected</span><span class="o">:</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">expected</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ReadTextFromFile</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="w"> </span><span class="n">filePath</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">Initialize</span><span class="p">();</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">Load</span><span class="p">();</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">Unload</span><span class="p">();</span>
+
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">Update</span><span class="p">();</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">Render</span><span class="p">();</span>
+
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">OnFramebufferResized</span><span class="p">();</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">OnKeyDown</span><span class="p">(</span>
+<span class="w">        </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">key</span><span class="p">,</span>
+<span class="w">        </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">modifiers</span><span class="p">,</span>
+<span class="w">        </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">scancode</span><span class="p">);</span>
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">OnKeyUp</span><span class="p">(</span>
+<span class="w">        </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">key</span><span class="p">,</span>
+<span class="w">        </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">modifiers</span><span class="p">,</span>
+<span class="w">        </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">scancode</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">OnOpenGLDebugMessage</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">messageType</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="w"> </span><span class="n">debugMessage</span><span class="p">);</span>
+
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">framebufferWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">framebufferHeight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w">    </span>
+
+<span class="k">private</span><span class="o">:</span>
+<span class="w">    </span><span class="k">friend</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">ApplicationAccess</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">GLFWwindow</span><span class="o">*</span><span class="w"> </span><span class="n">_windowHandle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">_isFullscreen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">ToggleFullscreen</span><span class="p">();</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>We said we wanted to make an Application base class which will handle windowing and input for us, and perhaps the odd other thing too.</p>
+<dl>
+<dt><code>Run</code></dt>
+<dd>
+<p>Thats our only gate to the outside, thats what <code>main</code> will call in our actual examples later on</p>
+</dd>
+<dt><code>ReadTextFromFile</code></dt>
+<dd>
+<p>This reads text from a file</p>
+</dd>
+</dl>
+<div class="highlight"><span class="filename">OpenGLGettingStarted/src/Shared/Application.cpp</span><pre><span></span><code><span class="n">std</span><span class="o">::</span><span class="n">expected</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Application</span><span class="o">::</span><span class="n">ReadTextFromFile</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="w"> </span><span class="n">filePath</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">ifstream</span><span class="w"> </span><span class="nf">file</span><span class="p">(</span><span class="n">filePath</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">ate</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">file</span><span class="p">.</span><span class="n">bad</span><span class="p">())</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">unexpected</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">format</span><span class="p">(</span><span class="s">&quot;Io: Unable to read from file {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">filePath</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">fileSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">file</span><span class="p">.</span><span class="n">tellg</span><span class="p">();</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fileSize</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">unexpected</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">format</span><span class="p">(</span><span class="s">&quot;Io: File {} is empty&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">filePath</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">result</span><span class="p">(</span><span class="n">fileSize</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;\0&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">file</span><span class="p">.</span><span class="n">seekg</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">file</span><span class="p">.</span><span class="n">read</span><span class="p">((</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">result</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<dl>
+<dt><code>Initialize</code></dt>
+<dd>
+<p>thats the method where we initialize application relevant things like, creating the main window, adjusting it to be in center, hooking up callbacks, since we use glfw and asking for an OpenGL context</p>
+</dd>
+</dl>
+<div class="highlight"><span class="filename">OpenGLGettingStarted/src/Shared/Application.cpp</span><pre><span></span><code><span class="kt">bool</span><span class="w"> </span><span class="nf">Application::Initialize</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">glfwInit</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GLFW_FALSE</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">spdlog</span><span class="o">::</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Glfw: Unable to initialize&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_CLIENT_API</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_OPENGL_API</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_CONTEXT_VERSION_MAJOR</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_CONTEXT_VERSION_MINOR</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_OPENGL_PROFILE</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_OPENGL_CORE_PROFILE</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_RESIZABLE</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_TRUE</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_DECORATED</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_TRUE</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_SCALE_TO_MONITOR</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_TRUE</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">primaryMonitor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glfwGetPrimaryMonitor</span><span class="p">();</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">videoMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glfwGetVideoMode</span><span class="p">(</span><span class="n">primaryMonitor</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">screenWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">videoMode</span><span class="o">-&gt;</span><span class="n">width</span><span class="p">;</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">screenHeight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">videoMode</span><span class="o">-&gt;</span><span class="n">height</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">windowWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int32_t</span><span class="o">&gt;</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">screenWidth</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.8f</span><span class="p">);</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">windowHeight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int32_t</span><span class="o">&gt;</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">screenHeight</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.8f</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">_windowHandle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glfwCreateWindow</span><span class="p">(</span><span class="n">windowWidth</span><span class="p">,</span><span class="w"> </span><span class="n">windowHeight</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;OpenGL - Getting Started&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_windowHandle</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">errorDescription</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">errorCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glfwGetError</span><span class="p">(</span><span class="o">&amp;</span><span class="n">errorDescription</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">errorCode</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">GLFW_NO_ERROR</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">spdlog</span><span class="o">::</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;GLFW: Unable to create window Details_{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">errorDescription</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">glfwSetWindowUserPointer</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">);</span>
+
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">monitorLeft</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">monitorTop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">glfwGetMonitorPos</span><span class="p">(</span><span class="n">primaryMonitor</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">monitorLeft</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">monitorTop</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glfwSetWindowPos</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">,</span><span class="w"> </span><span class="n">screenWidth</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">windowWidth</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">monitorLeft</span><span class="p">,</span><span class="w"> </span><span class="n">screenHeight</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">windowHeight</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">monitorTop</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">glfwSetFramebufferSizeCallback</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">,</span><span class="w"> </span><span class="n">ApplicationAccess</span><span class="o">::</span><span class="n">FramebufferResizeCallback</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glfwSetKeyCallback</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">,</span><span class="w"> </span><span class="n">ApplicationAccess</span><span class="o">::</span><span class="n">KeyCallback</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">glfwMakeContextCurrent</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">);</span>
+<span class="w">    </span><span class="n">gladLoadGLLoader</span><span class="p">((</span><span class="n">GLADloadproc</span><span class="p">)</span><span class="n">glfwGetProcAddress</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">glDebugMessageCallback</span><span class="p">(</span><span class="n">ApplicationAccess</span><span class="o">::</span><span class="n">DebugMessageCallback</span><span class="p">,</span><span class="w"> </span><span class="n">_windowHandle</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glEnable</span><span class="p">(</span><span class="n">GL_DEBUG_OUTPUT</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glEnable</span><span class="p">(</span><span class="n">GL_DEBUG_OUTPUT_SYNCHRONOUS</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">glEnable</span><span class="p">(</span><span class="n">GL_FRAMEBUFFER_SRGB</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glEnable</span><span class="p">(</span><span class="n">GL_CULL_FACE</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glCullFace</span><span class="p">(</span><span class="n">GL_BACK</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glFrontFace</span><span class="p">(</span><span class="n">GL_CCW</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">glClearColor</span><span class="p">(</span><span class="mf">0.35f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.76f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.16f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glClearDepthf</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<dl>
+<dt><code>Load</code></dt>
+<dd>
+<p>Thats empty in here for now, but this one is supposed to be called after <code>Initialize</code> and you would typically do things like loading programs, loading textures or levels before rendering anything</p>
+</dd>
+</dl>
+<div class="highlight"><span class="filename">OpenGLGettingStarted/src/Shared/Application.cpp</span><pre><span></span><code><span class="kt">bool</span><span class="w"> </span><span class="nf">Application::Load</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<dl>
+<dt><code>Unload</code></dt>
+<dd>
+<p>All the resources we loaded in <code>Load</code> should be unloaded too at some point, that's what <code>Unload</code> is there for. Many people rely on the operating system to clean up after the program has shut down, I don't.</p>
+</dd>
+</dl>
+<div class="highlight"><span class="filename">OpenGLGettingStarted/src/Shared/Application.cpp</span><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">Application::Unload</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_windowHandle</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">glfwDestroyWindow</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">glfwTerminate</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>
+<dl>
+<dt><code>Update</code></dt>
+<dd>
+<p>Is supposed to be for your game/business logic, where you update physics, ask the network for new state or prepare state for the gpu to render, like preparing a matrix buffer which contains all transforms of your world objects</p>
+</dd>
+</dl>
+<div class="highlight"><span class="filename">OpenGLGettingStarted/src/Shared/Application.cpp</span><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">Application::Update</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</code></pre></div>
+<dl>
+<dt><code>Render</code></dt>
+<dd>
+<p>Here goes all the render code, mostly draw calls</p>
+</dd>
+</dl>
+<div class="highlight"><span class="filename">OpenGLGettingStarted/src/Shared/Application.cpp</span><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">Application::Render</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">glClear</span><span class="p">(</span><span class="n">GL_COLOR_BUFFER_BIT</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">GL_DEPTH_BUFFER_BIT</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<dl>
+<dt><code>OnFramebufferResized</code></dt>
+<dd>
+<p>When you resize the window, be it dragging a corner to increase/decrease the window size, When the window size is changed, its non-client-rectangle area (the window part which isnt the border or system menu/window title bar). <code>GLFW</code> detects that and calls our function (<code>ApplicationAccess::FramebufferResizeCallback</code>) which will check for valid values
+  and calls this method. In this method we can then safely assume the window has been resized to proper values and we can do whatever we like in here. </p>
+</dd>
+</dl>
+<div class="highlight"><span class="filename">OpenGLGettingStarted/src/Shared/Application.cpp</span><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">Application::OnFramebufferResized</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">spdlog</span><span class="o">::</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Framebuffer resized to {}_{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">framebufferWidth</span><span class="p">,</span><span class="w"> </span><span class="n">framebufferHeight</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">glViewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">framebufferWidth</span><span class="p">,</span><span class="w"> </span><span class="n">framebufferHeight</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<dl>
+<dt><code>OnKeyDown</code></dt>
+<dd>should be self explanatory</dd>
+</dl>
+<div class="highlight"><span class="filename">OpenGLGettingStarted/src/Shared/Application.cpp</span><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">Application::OnKeyDown</span><span class="p">(</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">key</span><span class="p">,</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">modifiers</span><span class="p">,</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">scancode</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GLFW_KEY_ESCAPE</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">glfwSetWindowShouldClose</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_TRUE</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GLFW_KEY_F11</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">ToggleFullscreen</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<dl>
+<dt><code>OnKeyUp</code></dt>
+<dd>should be self explanatory</dd>
+</dl>
+<div class="highlight"><span class="filename">OpenGLGettingStarted/src/Shared/Application.cpp</span><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">Application::OnKeyUp</span><span class="p">(</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">key</span><span class="p">,</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">modifiers</span><span class="p">,</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">scancode</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</code></pre></div>
+<dl>
+<dt><code>OnOpenGLDebugMessage</code></dt>
+<dd>
+<p>OpenGL has this neat mechanism which is called <code>debug message callback</code>, where it will report a message when some state doesnt make sense for OpenGL and we can react to that. In our case, we will use that to halt the debugger (hence debugbreak is used) so that we are able to follow the call stack to see who the offending opengl call is causing trouble - which in most cases isnt OpenGL's fault but yours :) because you passed a wrong value to a glXXX call. We will see that later on</p>
+</dd>
+<dt><code>ToggleFullsceen</code></dt>
+<dd>
+<p>As the name suggests, it goggles the window to/from fullscreen/windowed</p>
+</dd>
+</dl>
+<p>There is also this <code>ApplicationAccess</code> thing. That only exists in <code>Application.cpp</code> which we will see next and I will explain there what is is.</p>
+<div class="highlight"><span class="filename">OpenGLGettingStarted/src/Shared/Application.cpp</span><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;Application.hpp&quot;</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;glad/glad.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;GLFW/glfw3.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;spdlog/spdlog.h&gt;</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;debugbreak.h&gt;</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;format&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;fstream&gt;</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ApplicationAccess</span><span class="w"> </span><span class="k">final</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">FramebufferResizeCallback</span><span class="p">(</span>
+<span class="w">        </span><span class="n">GLFWwindow</span><span class="o">*</span><span class="w"> </span><span class="n">window</span><span class="p">,</span>
+<span class="w">        </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">framebufferWidth</span><span class="p">,</span>
+<span class="w">        </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">framebufferHeight</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">application</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Application</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">glfwGetWindowUserPointer</span><span class="p">(</span><span class="n">window</span><span class="p">));</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">application</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">spdlog</span><span class="o">::</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;App: You forgot to call glfwSetWindowUserPointer in Application::Initialize&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">framebufferWidth</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">framebufferHeight</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">application</span><span class="o">-&gt;</span><span class="n">framebufferWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">framebufferWidth</span><span class="p">;</span>
+<span class="w">            </span><span class="n">application</span><span class="o">-&gt;</span><span class="n">framebufferHeight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">framebufferHeight</span><span class="p">;</span>
+<span class="w">            </span><span class="n">application</span><span class="o">-&gt;</span><span class="n">OnFramebufferResized</span><span class="p">();</span>
+<span class="w">            </span><span class="n">application</span><span class="o">-&gt;</span><span class="n">Render</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">KeyCallback</span><span class="p">(</span>
+<span class="w">        </span><span class="n">GLFWwindow</span><span class="o">*</span><span class="w"> </span><span class="n">window</span><span class="p">,</span>
+<span class="w">        </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">key</span><span class="p">,</span>
+<span class="w">        </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">scancode</span><span class="p">,</span>
+<span class="w">        </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">action</span><span class="p">,</span>
+<span class="w">        </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">modifiers</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">application</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Application</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">glfwGetWindowUserPointer</span><span class="p">(</span><span class="n">window</span><span class="p">));</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">application</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">spdlog</span><span class="o">::</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;App: You forgot to call glfwSetWindowUserPointer in Application::Initialize&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">action</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GLFW_PRESS</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">action</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GLFW_REPEAT</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">application</span><span class="o">-&gt;</span><span class="n">OnKeyDown</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">modifiers</span><span class="p">,</span><span class="w"> </span><span class="n">scancode</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">application</span><span class="o">-&gt;</span><span class="n">OnKeyUp</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">modifiers</span><span class="p">,</span><span class="w"> </span><span class="n">scancode</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">GLAPIENTRY</span><span class="w"> </span><span class="n">DebugMessageCallback</span><span class="p">(</span><span class="n">GLenum</span><span class="w"> </span><span class="n">source</span><span class="p">,</span>
+<span class="w">                                        </span><span class="n">GLenum</span><span class="w"> </span><span class="n">type</span><span class="p">,</span>
+<span class="w">                                        </span><span class="n">GLuint</span><span class="w"> </span><span class="n">id</span><span class="p">,</span>
+<span class="w">                                        </span><span class="n">GLenum</span><span class="w"> </span><span class="n">severity</span><span class="p">,</span>
+<span class="w">                                        </span><span class="p">[[</span><span class="n">maybe_unused</span><span class="p">]]</span><span class="w"> </span><span class="n">GLsizei</span><span class="w"> </span><span class="n">length</span><span class="p">,</span>
+<span class="w">                                        </span><span class="k">const</span><span class="w"> </span><span class="n">GLchar</span><span class="o">*</span><span class="w"> </span><span class="n">message</span><span class="p">,</span>
+<span class="w">                                        </span><span class="p">[[</span><span class="n">maybe_unused</span><span class="p">]]</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">userParam</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Ignore certain verbose info messages (particularly ones on Nvidia).</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">131169</span><span class="w"> </span><span class="o">||</span><span class="w"> </span>
+<span class="w">            </span><span class="n">id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">131185</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="c1">// NV: Buffer will use video memory</span>
+<span class="w">            </span><span class="n">id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">131218</span><span class="w"> </span><span class="o">||</span><span class="w"> </span>
+<span class="w">            </span><span class="n">id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">131204</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="c1">// Texture cannot be used for texture mapping</span>
+<span class="w">            </span><span class="n">id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">131222</span><span class="w"> </span><span class="o">||</span>
+<span class="w">            </span><span class="n">id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">131154</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="c1">// NV: pixel transfer is synchronized with 3D rendering</span>
+<span class="w">            </span><span class="n">id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w">         </span><span class="c1">// gl{Push, Pop}DebugGroup</span>
+<span class="w">        </span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span>
+
+<span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">stringstream</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="p">;</span>
+<span class="w">        </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+<span class="w">        </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_SOURCE_API</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Source: API&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_SOURCE_WINDOW_SYSTEM</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Source: Window Manager&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_SOURCE_SHADER_COMPILER</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Source: Shader Compiler&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_SOURCE_THIRD_PARTY</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Source: Third Party&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_SOURCE_APPLICATION</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Source: Application&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_SOURCE_OTHER</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Source: Other&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+<span class="w">        </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">type</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_TYPE_ERROR</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Type: Error&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Type: Deprecated Behaviour&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Type: Undefined Behaviour&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_TYPE_PORTABILITY</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Type: Portability&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_TYPE_PERFORMANCE</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Type: Performance&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_TYPE_MARKER</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Type: Marker&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_TYPE_PUSH_GROUP</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Type: Push Group&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_TYPE_POP_GROUP</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Type: Pop Group&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_TYPE_OTHER</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Type: Other&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+<span class="w">        </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">severity</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_SEVERITY_HIGH</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Severity: high&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_SEVERITY_MEDIUM</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Severity: medium&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_SEVERITY_LOW</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Severity: low&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_SEVERITY_NOTIFICATION</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Severity: notification&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">userParam</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="k">auto</span><span class="w"> </span><span class="n">windowHandle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">GLFWwindow</span><span class="o">*</span><span class="p">)</span><span class="n">userParam</span><span class="p">;</span>
+<span class="w">            </span><span class="k">auto</span><span class="w"> </span><span class="n">application</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Application</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">glfwGetWindowUserPointer</span><span class="p">(</span><span class="n">windowHandle</span><span class="p">));</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">application</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="n">spdlog</span><span class="o">::</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;App: You forgot to call glfwSetWindowUserPointer in Application::Initialize&quot;</span><span class="p">);</span>
+<span class="w">                </span><span class="k">return</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+
+<span class="w">            </span><span class="n">application</span><span class="o">-&gt;</span><span class="n">OnOpenGLDebugMessage</span><span class="p">(</span><span class="n">type</span><span class="p">,</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="p">.</span><span class="n">str</span><span class="p">());</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+
+<span class="n">Application</span><span class="o">::~</span><span class="n">Application</span><span class="p">()</span>
+<span class="p">{</span>
+
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">expected</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Application</span><span class="o">::</span><span class="n">ReadTextFromFile</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="w"> </span><span class="n">filePath</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">ifstream</span><span class="w"> </span><span class="nf">file</span><span class="p">(</span><span class="n">filePath</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">ate</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">file</span><span class="p">.</span><span class="n">bad</span><span class="p">())</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">unexpected</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">format</span><span class="p">(</span><span class="s">&quot;Io: Unable to read from file {}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">filePath</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">fileSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">file</span><span class="p">.</span><span class="n">tellg</span><span class="p">();</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fileSize</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">unexpected</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">format</span><span class="p">(</span><span class="s">&quot;Io: File {} is empty&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">filePath</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">result</span><span class="p">(</span><span class="n">fileSize</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;\0&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">file</span><span class="p">.</span><span class="n">seekg</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">file</span><span class="p">.</span><span class="n">read</span><span class="p">((</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">result</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span><span class="w"> </span><span class="n">result</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">Application</span><span class="o">::</span><span class="n">Run</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Initialize</span><span class="p">())</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">spdlog</span><span class="o">::</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;App: Initialized&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">Load</span><span class="p">())</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">spdlog</span><span class="o">::</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;App: Loaded&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">glfwWindowShouldClose</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">))</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">glfwPollEvents</span><span class="p">();</span>
+
+<span class="w">        </span><span class="n">Update</span><span class="p">();</span>
+
+<span class="w">        </span><span class="n">Render</span><span class="p">();</span>
+
+<span class="w">        </span><span class="n">glfwSwapBuffers</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">spdlog</span><span class="o">::</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;App: Unloading&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">Unload</span><span class="p">();</span>
+
+<span class="w">    </span><span class="n">spdlog</span><span class="o">::</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;App: Unloaded&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span><span class="w"> </span><span class="n">Application</span><span class="o">::</span><span class="n">Initialize</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">glfwInit</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GLFW_FALSE</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">spdlog</span><span class="o">::</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Glfw: Unable to initialize&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_CLIENT_API</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_OPENGL_API</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_CONTEXT_VERSION_MAJOR</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_CONTEXT_VERSION_MINOR</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_OPENGL_PROFILE</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_OPENGL_CORE_PROFILE</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_RESIZABLE</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_TRUE</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_DECORATED</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_TRUE</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glfwWindowHint</span><span class="p">(</span><span class="n">GLFW_SCALE_TO_MONITOR</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_TRUE</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">primaryMonitor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glfwGetPrimaryMonitor</span><span class="p">();</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">videoMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glfwGetVideoMode</span><span class="p">(</span><span class="n">primaryMonitor</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">screenWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">videoMode</span><span class="o">-&gt;</span><span class="n">width</span><span class="p">;</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">screenHeight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">videoMode</span><span class="o">-&gt;</span><span class="n">height</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">windowWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int32_t</span><span class="o">&gt;</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">screenWidth</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.8f</span><span class="p">);</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">windowHeight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int32_t</span><span class="o">&gt;</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">screenHeight</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.8f</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">_windowHandle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glfwCreateWindow</span><span class="p">(</span><span class="n">windowWidth</span><span class="p">,</span><span class="w"> </span><span class="n">windowHeight</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;OpenGL - Getting Started&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_windowHandle</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">errorDescription</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">errorCode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glfwGetError</span><span class="p">(</span><span class="o">&amp;</span><span class="n">errorDescription</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">errorCode</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">GLFW_NO_ERROR</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">spdlog</span><span class="o">::</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;GLFW: Unable to create window Details_{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">errorDescription</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">glfwSetWindowUserPointer</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">,</span><span class="w"> </span><span class="k">this</span><span class="p">);</span>
+
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">monitorLeft</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">monitorTop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">glfwGetMonitorPos</span><span class="p">(</span><span class="n">primaryMonitor</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">monitorLeft</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">monitorTop</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glfwSetWindowPos</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">,</span><span class="w"> </span><span class="n">screenWidth</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">windowWidth</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">monitorLeft</span><span class="p">,</span><span class="w"> </span><span class="n">screenHeight</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">windowHeight</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">monitorTop</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">glfwSetFramebufferSizeCallback</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">,</span><span class="w"> </span><span class="n">ApplicationAccess</span><span class="o">::</span><span class="n">FramebufferResizeCallback</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glfwSetKeyCallback</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">,</span><span class="w"> </span><span class="n">ApplicationAccess</span><span class="o">::</span><span class="n">KeyCallback</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">glfwMakeContextCurrent</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">);</span>
+<span class="w">    </span><span class="n">gladLoadGLLoader</span><span class="p">((</span><span class="n">GLADloadproc</span><span class="p">)</span><span class="n">glfwGetProcAddress</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">glDebugMessageCallback</span><span class="p">(</span><span class="n">ApplicationAccess</span><span class="o">::</span><span class="n">DebugMessageCallback</span><span class="p">,</span><span class="w"> </span><span class="n">_windowHandle</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glEnable</span><span class="p">(</span><span class="n">GL_DEBUG_OUTPUT</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glEnable</span><span class="p">(</span><span class="n">GL_DEBUG_OUTPUT_SYNCHRONOUS</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">glEnable</span><span class="p">(</span><span class="n">GL_FRAMEBUFFER_SRGB</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glEnable</span><span class="p">(</span><span class="n">GL_CULL_FACE</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glCullFace</span><span class="p">(</span><span class="n">GL_BACK</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glFrontFace</span><span class="p">(</span><span class="n">GL_CCW</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">glClearColor</span><span class="p">(</span><span class="mf">0.35f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.76f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.16f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glClearDepthf</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span><span class="w"> </span><span class="n">Application</span><span class="o">::</span><span class="n">Load</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">Application</span><span class="o">::</span><span class="n">Unload</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_windowHandle</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">glfwDestroyWindow</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">glfwTerminate</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">Application</span><span class="o">::</span><span class="n">Update</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">Application</span><span class="o">::</span><span class="n">Render</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">glClear</span><span class="p">(</span><span class="n">GL_COLOR_BUFFER_BIT</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">GL_DEPTH_BUFFER_BIT</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">Application</span><span class="o">::</span><span class="n">OnFramebufferResized</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">spdlog</span><span class="o">::</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Framebuffer resized to {}_{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">framebufferWidth</span><span class="p">,</span><span class="w"> </span><span class="n">framebufferHeight</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">glViewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">framebufferWidth</span><span class="p">,</span><span class="w"> </span><span class="n">framebufferHeight</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">Application</span><span class="o">::</span><span class="n">OnKeyDown</span><span class="p">(</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">key</span><span class="p">,</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">modifiers</span><span class="p">,</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">scancode</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GLFW_KEY_ESCAPE</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">glfwSetWindowShouldClose</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_TRUE</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GLFW_KEY_F11</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">ToggleFullscreen</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">Application</span><span class="o">::</span><span class="n">OnKeyUp</span><span class="p">(</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">key</span><span class="p">,</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">modifiers</span><span class="p">,</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">scancode</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">Application</span><span class="o">::</span><span class="n">OnOpenGLDebugMessage</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">messageType</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="w"> </span><span class="n">debugMessage</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">spdlog</span><span class="o">::</span><span class="n">error</span><span class="p">(</span><span class="n">debugMessage</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">messageType</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GL_DEBUG_TYPE_ERROR</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">debug_break</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="n">Application</span><span class="o">::</span><span class="n">ToggleFullscreen</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">_isFullscreen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">!</span><span class="n">_isFullscreen</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">glfwSetWindowAttrib</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_DECORATED</span><span class="p">,</span><span class="w"> </span><span class="n">_isFullscreen</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">GLFW_FALSE</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">GLFW_TRUE</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glfwSetWindowAttrib</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_RESIZABLE</span><span class="p">,</span><span class="w"> </span><span class="n">_isFullscreen</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">GLFW_FALSE</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">GLFW_TRUE</span><span class="p">);</span>
+
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">monitorLeft</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">monitorTop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">primaryMonitor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glfwGetPrimaryMonitor</span><span class="p">();</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">videoMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glfwGetVideoMode</span><span class="p">(</span><span class="n">primaryMonitor</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">screenWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">videoMode</span><span class="o">-&gt;</span><span class="n">width</span><span class="p">;</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">screenHeight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">videoMode</span><span class="o">-&gt;</span><span class="n">height</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">glfwGetMonitorPos</span><span class="p">(</span><span class="n">primaryMonitor</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">monitorLeft</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">monitorTop</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_isFullscreen</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">glfwSetWindowPos</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">,</span><span class="w"> </span><span class="n">monitorLeft</span><span class="p">,</span><span class="w"> </span><span class="n">monitorTop</span><span class="p">);</span>
+<span class="w">        </span><span class="n">glfwSetWindowSize</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">,</span><span class="w"> </span><span class="n">screenWidth</span><span class="p">,</span><span class="w"> </span><span class="n">screenHeight</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">windowWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int32_t</span><span class="o">&gt;</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">screenWidth</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.8f</span><span class="p">);</span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">windowHeight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int32_t</span><span class="o">&gt;</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">screenHeight</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.8f</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">glfwSetWindowPos</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">,</span><span class="w"> </span><span class="n">screenWidth</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">windowWidth</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">monitorLeft</span><span class="p">,</span><span class="w"> </span><span class="n">screenHeight</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">windowHeight</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">monitorTop</span><span class="p">);</span>
+<span class="w">        </span><span class="n">glfwSetWindowSize</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">,</span><span class="w"> </span><span class="n">windowWidth</span><span class="p">,</span><span class="w"> </span><span class="n">windowHeight</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">Render</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="admonition danger">
+<p class="admonition-title">TODO</p>
+<p>Elaborate a bit more on all the methods in Application.cpp</p>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">TODO</p>
+<p>Explain OpenGL context + glad</p>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">TODO</p>
+<p>Explain the first glXXX calls</p>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">TODO</p>
+<p>Explain glDebugMessageCallback a bit more + the big thing i use there as the callback</p>
+</div>
+<h3 id="hellowindowapplication">HelloWindowApplication<a class="headerlink" href="#hellowindowapplication" title="Permanent link">&para;</a></h3>
+<p>Now is the time to create an actual project.</p>
+<p>Let's call the target HelloWindow and lets put it in <code>src/01-HelloWindow</code>.</p>
+<p>We need</p>
+<div class="highlight"><span class="filename">src/01-HelloWindow/HelloWindowApplication.hpp</span><pre><span></span><code><span class="cp">#pragma once</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;../Shared/Application.hpp&quot;</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">HelloWindowApplication</span><span class="w"> </span><span class="k">final</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">Application</span>
+<span class="p">{</span>
+<span class="k">protected</span><span class="o">:</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">Update</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>and</p>
+<div class="highlight"><span class="filename">src/01-HelloWindow/HelloWindowApplication.cpp</span><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;HelloWindowApplication.hpp&quot;</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;spdlog/spdlog.h&gt;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">HelloWindowApplication::Update</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Application</span><span class="o">::</span><span class="n">Update</span><span class="p">();</span>
+<span class="w">    </span><span class="n">spdlog</span><span class="o">::</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Hello from HelloWindowApplication&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>and also</p>
+<div class="highlight"><span class="filename">src/01-HelloWindow/Main.cpp</span><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;HelloWindowApplication.hpp&quot;</span>
+
+<span class="kt">int32_t</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span>
+<span class="w">    </span><span class="p">[[</span><span class="n">maybe_unused</span><span class="p">]]</span><span class="w"> </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">argc</span><span class="p">,</span>
+<span class="w">    </span><span class="p">[[</span><span class="n">maybe_unused</span><span class="p">]]</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">HelloWindowApplication</span><span class="w"> </span><span class="n">application</span><span class="p">;</span>
+<span class="w">    </span><span class="n">application</span><span class="p">.</span><span class="n">Run</span><span class="p">();</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>All that should compile, but doesn't do anything yet, obviously.</p>
+<div class="admonition failure">
+<p class="admonition-title">Attention. Attention</p>
+<p>From here onwards is subject to change and under construction. Ignore please :)</p>
+</div>
+<p>The important bits here are, initialize <code>GLFW</code>, grab the screen resolution of the current primary monitor so that we can center the window
+on that primary screen and also resize it to be 80% of the resolution. I really hate windows spawning at random locations everytime you start the application.</p>
+<p>We also need an active render context, and to load all the relevant opengl functions for that active context we use <code>GLAD</code>.</p>
+<p>To see we hooked up everything correct so far, we should see a window and its content is a nice frog green.</p>
+<p>You might wonder wtf that <code>ApplicationAccess</code> class is. It's just a tool to be able to hook into glfw's callbacks and at the same time
+keep the visibility of the handling functions still within <code>Application</code>. Otherwise those callbacks would need to be public static within <code>Application</code>
+and thats another thing I dont want, expose things to the public which is not supposed to be public, anyway, fight me if you want.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ApplicationAccess</span><span class="w"> </span><span class="k">final</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">FramebufferResizeCallback</span><span class="p">(</span>
+<span class="w">        </span><span class="n">GLFWwindow</span><span class="o">*</span><span class="w"> </span><span class="n">window</span><span class="p">,</span>
+<span class="w">        </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">framebufferWidth</span><span class="p">,</span>
+<span class="w">        </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">framebufferHeight</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">application</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Application</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">glfwGetWindowUserPointer</span><span class="p">(</span><span class="n">window</span><span class="p">));</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">application</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">spdlog</span><span class="o">::</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;App: You forgot to call glfwSetWindowUserPointer in Application::Initialize&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">framebufferWidth</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">framebufferHeight</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">application</span><span class="o">-&gt;</span><span class="n">framebufferWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">framebufferWidth</span><span class="p">;</span>
+<span class="w">            </span><span class="n">application</span><span class="o">-&gt;</span><span class="n">framebufferHeight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">framebufferHeight</span><span class="p">;</span>
+<span class="w">            </span><span class="n">application</span><span class="o">-&gt;</span><span class="n">OnFramebufferResized</span><span class="p">();</span>
+<span class="w">            </span><span class="n">application</span><span class="o">-&gt;</span><span class="n">Render</span><span class="p">();</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">KeyCallback</span><span class="p">(</span>
+<span class="w">        </span><span class="n">GLFWwindow</span><span class="o">*</span><span class="w"> </span><span class="n">window</span><span class="p">,</span>
+<span class="w">        </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">key</span><span class="p">,</span>
+<span class="w">        </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">scancode</span><span class="p">,</span>
+<span class="w">        </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">action</span><span class="p">,</span>
+<span class="w">        </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">modifiers</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">application</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Application</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">glfwGetWindowUserPointer</span><span class="p">(</span><span class="n">window</span><span class="p">));</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">application</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">spdlog</span><span class="o">::</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;App: You forgot to call glfwSetWindowUserPointer in Application::Initialize&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">action</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GLFW_PRESS</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">action</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GLFW_REPEAT</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">application</span><span class="o">-&gt;</span><span class="n">OnKeyDown</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">modifiers</span><span class="p">,</span><span class="w"> </span><span class="n">scancode</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">application</span><span class="o">-&gt;</span><span class="n">OnKeyUp</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">modifiers</span><span class="p">,</span><span class="w"> </span><span class="n">scancode</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>That's <code>ApplicationAccess</code>' implementation. It should be defined above <code>Application</code> class within <code>Application.cpp</code>.</p>
+<p>You could probably redirect the key information to some other construct, some <code>InputHandler</code> of some kind,
+rather than having 2 methods in the <code>Application</code> class, but perhaps its an exercise for you to exercise if you want.</p>
+<p>I'm saying this because many people prefer not to have to access the <code>Application</code> class when they want to check for
+keypresses in their <code>CameraController</code> :)</p>
+<p>Ok, moving on, the rest of <code>Application</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="kt">bool</span><span class="w"> </span><span class="nf">Application::Load</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">Application::Unload</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_windowHandle</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">glfwDestroyWindow</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">glfwTerminate</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">Application::Update</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">Application::Render</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">glClear</span><span class="p">(</span><span class="n">GL_COLOR_BUFFER_BIT</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">GL_DEPTH_BUFFER_BIT</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">Application::OnFramebufferResized</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">spdlog</span><span class="o">::</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Framebuffer resized to {}_{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">framebufferWidth</span><span class="p">,</span><span class="w"> </span><span class="n">framebufferHeight</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">glViewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">framebufferWidth</span><span class="p">,</span><span class="w"> </span><span class="n">framebufferHeight</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">Application::OnKeyDown</span><span class="p">(</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">key</span><span class="p">,</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">modifiers</span><span class="p">,</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">scancode</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GLFW_KEY_ESCAPE</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">glfwSetWindowShouldClose</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_TRUE</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GLFW_KEY_F11</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">ToggleFullscreen</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">Application::OnKeyUp</span><span class="p">(</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">key</span><span class="p">,</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">modifiers</span><span class="p">,</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">scancode</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">Application::ToggleFullscreen</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">_isFullscreen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">!</span><span class="n">_isFullscreen</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">glfwSetWindowAttrib</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_DECORATED</span><span class="p">,</span><span class="w"> </span><span class="n">_isFullscreen</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">GLFW_FALSE</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">GLFW_TRUE</span><span class="p">);</span>
+<span class="w">    </span><span class="n">glfwSetWindowAttrib</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">,</span><span class="w"> </span><span class="n">GLFW_RESIZABLE</span><span class="p">,</span><span class="w"> </span><span class="n">_isFullscreen</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">GLFW_FALSE</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">GLFW_TRUE</span><span class="p">);</span>
+
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">monitorLeft</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int32_t</span><span class="w"> </span><span class="n">monitorTop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">primaryMonitor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glfwGetPrimaryMonitor</span><span class="p">();</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">videoMode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">glfwGetVideoMode</span><span class="p">(</span><span class="n">primaryMonitor</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">screenWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">videoMode</span><span class="o">-&gt;</span><span class="n">width</span><span class="p">;</span>
+<span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">screenHeight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">videoMode</span><span class="o">-&gt;</span><span class="n">height</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">glfwGetMonitorPos</span><span class="p">(</span><span class="n">primaryMonitor</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">monitorLeft</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">monitorTop</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">_isFullscreen</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">glfwSetWindowPos</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">,</span><span class="w"> </span><span class="n">monitorLeft</span><span class="p">,</span><span class="w"> </span><span class="n">monitorTop</span><span class="p">);</span>
+<span class="w">        </span><span class="n">glfwSetWindowSize</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">,</span><span class="w"> </span><span class="n">screenWidth</span><span class="p">,</span><span class="w"> </span><span class="n">screenHeight</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">else</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">windowWidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int32_t</span><span class="o">&gt;</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">screenWidth</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.8f</span><span class="p">);</span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">windowHeight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int32_t</span><span class="o">&gt;</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">screenHeight</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.8f</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">glfwSetWindowPos</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">,</span><span class="w"> </span><span class="n">screenWidth</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">windowWidth</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">monitorLeft</span><span class="p">,</span><span class="w"> </span><span class="n">screenHeight</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">windowHeight</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">monitorTop</span><span class="p">);</span>
+<span class="w">        </span><span class="n">glfwSetWindowSize</span><span class="p">(</span><span class="n">_windowHandle</span><span class="p">,</span><span class="w"> </span><span class="n">windowWidth</span><span class="p">,</span><span class="w"> </span><span class="n">windowHeight</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Few words about what is happening here.</p>
+<p>As mentioned before I like to keep <code>Initialize</code> and <code>Load</code> separate. <code>Unload</code> as the name suggests unloads any resources to clean up
+rather then letting the OS take care of that when you ALT+F4 the app.</p>
+<p>The methods <code>Update</code> and <code>Render</code> are the ones we will be handling our demo/example/guide code in to render stuff and to update things as they are changing.</p>
+<p><code>OnFramebufferResized</code> is invoked whenever we resize the window. That leads to its framebuffer (the non client recangle area) being resized too and that's
+where we can hook into; to resize framebuffers or other resources which are depending on the framebuffer size.</p>
+<p><code>OnKeyDown</code> and <code>OnKeyUp</code> are our callbacks when keys were pressed and released. Should be sufficient for this kind of guide as also mentioned before.</p>
+<p>We wanted <code>F11</code> to toggle windowed-window and fullscreen, now we can.</p>
+<p>Basic application is not done yet. Let's also hookup the debug message callback, which will save our butts in the future. Alot of tutorials or blogs keep using
+so called <code>glCall</code> or <code>glCheck</code> macros which run <code>glGetError</code> - even that they mess up quite a bit, because that ancient function also needs to be called correctly.</p>
+<p>Anywho.</p>
+<p>lets extend <code>ApplicationAccess</code> with another method like this</p>
+<div class="highlight"><pre><span></span><code><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">GLAPIENTRY</span><span class="w"> </span><span class="nf">DebugMessageCallback</span><span class="p">(</span><span class="n">GLenum</span><span class="w"> </span><span class="n">source</span><span class="p">,</span>
+<span class="w">                                    </span><span class="n">GLenum</span><span class="w"> </span><span class="n">type</span><span class="p">,</span>
+<span class="w">                                    </span><span class="n">GLuint</span><span class="w"> </span><span class="n">id</span><span class="p">,</span>
+<span class="w">                                    </span><span class="n">GLenum</span><span class="w"> </span><span class="n">severity</span><span class="p">,</span>
+<span class="w">                                    </span><span class="p">[[</span><span class="n">maybe_unused</span><span class="p">]]</span><span class="w"> </span><span class="n">GLsizei</span><span class="w"> </span><span class="n">length</span><span class="p">,</span>
+<span class="w">                                    </span><span class="k">const</span><span class="w"> </span><span class="n">GLchar</span><span class="o">*</span><span class="w"> </span><span class="n">message</span><span class="p">,</span>
+<span class="w">                                    </span><span class="p">[[</span><span class="n">maybe_unused</span><span class="p">]]</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">void</span><span class="o">*</span><span class="w"> </span><span class="n">userParam</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// Ignore certain verbose info messages (particularly ones on Nvidia).</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">131169</span><span class="w"> </span><span class="o">||</span><span class="w"> </span>
+<span class="w">        </span><span class="n">id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">131185</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="c1">// NV: Buffer will use video memory</span>
+<span class="w">        </span><span class="n">id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">131218</span><span class="w"> </span><span class="o">||</span><span class="w"> </span>
+<span class="w">        </span><span class="n">id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">131204</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="c1">// Texture cannot be used for texture mapping</span>
+<span class="w">        </span><span class="n">id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">131222</span><span class="w"> </span><span class="o">||</span>
+<span class="w">        </span><span class="n">id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">131154</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="c1">// NV: pixel transfer is synchronized with 3D rendering</span>
+<span class="w">        </span><span class="n">id</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w">         </span><span class="c1">// gl{Push, Pop}DebugGroup</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="w">    </span><span class="k">return</span><span class="p">;</span>
+
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">stringstream</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="p">;</span>
+<span class="w">    </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_SOURCE_API</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Source: API&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_SOURCE_WINDOW_SYSTEM</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Source: Window Manager&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_SOURCE_SHADER_COMPILER</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Source: Shader Compiler&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_SOURCE_THIRD_PARTY</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Source: Third Party&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_SOURCE_APPLICATION</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Source: Application&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_SOURCE_OTHER</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Source: Other&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">type</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_TYPE_ERROR</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Type: Error&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Type: Deprecated Behaviour&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Type: Undefined Behaviour&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_TYPE_PORTABILITY</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Type: Portability&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_TYPE_PERFORMANCE</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Type: Performance&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_TYPE_MARKER</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Type: Marker&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_TYPE_PUSH_GROUP</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Type: Push Group&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_TYPE_POP_GROUP</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Type: Pop Group&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_TYPE_OTHER</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Type: Other&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+<span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">severity</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_SEVERITY_HIGH</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Severity: high&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_SEVERITY_MEDIUM</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Severity: medium&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_SEVERITY_LOW</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Severity: low&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="no">GL_DEBUG_SEVERITY_NOTIFICATION</span><span class="p">:</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Severity: notification&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">userParam</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">windowHandle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">GLFWwindow</span><span class="o">*</span><span class="p">)</span><span class="n">userParam</span><span class="p">;</span>
+<span class="w">        </span><span class="k">auto</span><span class="w"> </span><span class="n">application</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Application</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">glfwGetWindowUserPointer</span><span class="p">(</span><span class="n">windowHandle</span><span class="p">));</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">application</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="n">spdlog</span><span class="o">::</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;App: You forgot to call glfwSetWindowUserPointer in Application::Initialize&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="k">return</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">application</span><span class="o">-&gt;</span><span class="n">OnOpenGLDebugMessage</span><span class="p">(</span><span class="n">type</span><span class="p">,</span><span class="w"> </span><span class="n">debugMessageStream</span><span class="p">.</span><span class="n">str</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>That also means we have to extend <code>Application</code> itself with <code>OnOpenGLDebugMessage</code> like so</p>
+<div class="highlight"><pre><span></span><code><span class="k">protected</span><span class="o">:</span>
+<span class="p">...</span>
+<span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">OnOpenGLDebugMessage</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">messageType</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="w"> </span><span class="n">debugMessage</span><span class="p">);</span>
+<span class="p">...</span>
+</code></pre></div>
+<p>and</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">Application::OnOpenGLDebugMessage</span><span class="p">(</span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">messageType</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string_view</span><span class="w"> </span><span class="n">debugMessage</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">spdlog</span><span class="o">::</span><span class="n">error</span><span class="p">(</span><span class="n">debugMessage</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">messageType</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">GL_DEBUG_TYPE_ERROR</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">debug_break</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The <code>Initialize</code> method also needs to be adjusted slightly to hookup the callback and enable the thing.</p>
+<div class="highlight"><pre><span></span><code><span class="n">glDebugMessageCallback</span><span class="p">(</span><span class="n">ApplicationAccess</span><span class="o">::</span><span class="n">DebugMessageCallback</span><span class="p">,</span><span class="w"> </span><span class="n">_windowHandle</span><span class="p">);</span>
+<span class="n">glEnable</span><span class="p">(</span><span class="n">GL_DEBUG_OUTPUT</span><span class="p">);</span>
+<span class="n">glEnable</span><span class="p">(</span><span class="n">GL_DEBUG_OUTPUT_SYNCHRONOUS</span><span class="p">);</span>
+</code></pre></div>
+<p>So OpenGL has this mechanism which was added as an extension in OpenGL 3.3 or so and is core since 4.3 I believe.
+A much superior error revealing thing than <code>glGetError</code> ever was. It helps to actually point at the offending function
+without cluttering your code with those <code>glCall/glCheck</code> macros. and provides a bit more information rather than just "INVALID HANDLE" or something like that</p>
+<p>In this context we are actually only interested in actual errors, thats when we ask the debugger to stop here via <code>debug_break</code>. Then you can take a look
+at the stacktrace and locate the offending function call that way. With that information you can then go into the <a href="https://registry.khronos.org/OpenGL/specs/gl/glspec46.core.pdf">glspec</a>
+And look for the function to figure our how to call it properly.</p>
+<p>Dont forget to include its header as well</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;debugbreak.h&gt;</span>
+</code></pre></div>
+<p>Give it a try, just add a <code>glEnable(0xFFFF);</code> at the end of <code>Application::Initialize</code>.
+You should get some console output which looks like this:</p>
+<div class="highlight"><pre><span></span><code>[2023-11-05 23:53:53.768] [error] GL_INVALID_ENUM error generated. &lt;cap&gt; enum is invalid; expected GL_ALPHA_TEST, GL_BLEND, GL_COLOR_MATERIAL, GL_CULL_FACE, GL_DEPTH_TEST, GL_DITHER, GL_FOG, etc. (136 others).
+Source: API
+Type: Error
+Severity: high
+</code></pre></div>
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright 2023 deccer
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/deccer/opengl-getting-started" target="_blank" rel="noopener" title="OpenGL Getting Started on Github" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://discord.gg/6mgNGk7" target="_blank" rel="noopener" title="opengl-getting-started on discord" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M524.531 69.836a1.5 1.5 0 0 0-.764-.7A485.065 485.065 0 0 0 404.081 32.03a1.816 1.816 0 0 0-1.923.91 337.461 337.461 0 0 0-14.9 30.6 447.848 447.848 0 0 0-134.426 0 309.541 309.541 0 0 0-15.135-30.6 1.89 1.89 0 0 0-1.924-.91 483.689 483.689 0 0 0-119.688 37.107 1.712 1.712 0 0 0-.788.676C39.068 183.651 18.186 294.69 28.43 404.354a2.016 2.016 0 0 0 .765 1.375 487.666 487.666 0 0 0 146.825 74.189 1.9 1.9 0 0 0 2.063-.676A348.2 348.2 0 0 0 208.12 430.4a1.86 1.86 0 0 0-1.019-2.588 321.173 321.173 0 0 1-45.868-21.853 1.885 1.885 0 0 1-.185-3.126 251.047 251.047 0 0 0 9.109-7.137 1.819 1.819 0 0 1 1.9-.256c96.229 43.917 200.41 43.917 295.5 0a1.812 1.812 0 0 1 1.924.233 234.533 234.533 0 0 0 9.132 7.16 1.884 1.884 0 0 1-.162 3.126 301.407 301.407 0 0 1-45.89 21.83 1.875 1.875 0 0 0-1 2.611 391.055 391.055 0 0 0 30.014 48.815 1.864 1.864 0 0 0 2.063.7A486.048 486.048 0 0 0 610.7 405.729a1.882 1.882 0 0 0 .765-1.352c12.264-126.783-20.532-236.912-86.934-334.541ZM222.491 337.58c-28.972 0-52.844-26.587-52.844-59.239s23.409-59.241 52.844-59.241c29.665 0 53.306 26.82 52.843 59.239 0 32.654-23.41 59.241-52.843 59.241Zm195.38 0c-28.971 0-52.843-26.587-52.843-59.239s23.409-59.241 52.843-59.241c29.667 0 53.307 26.82 52.844 59.239 0 32.654-23.177 59.241-52.844 59.241Z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.footer"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.cd18aaf1.min.js"></script>
+      
+    
+  </body>
+</html>
